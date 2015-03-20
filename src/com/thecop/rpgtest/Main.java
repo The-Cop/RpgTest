@@ -11,8 +11,15 @@ public class Main {
         System.out.print("Enter something:");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            String s = br.readLine();
-            System.out.println(s);
+            int c;
+            while((c = br.read()) != -1) {
+                char character = (char) c;
+                System.out.println("Entered: "+character);
+                if(character=='q'){
+                    break;
+                }
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
