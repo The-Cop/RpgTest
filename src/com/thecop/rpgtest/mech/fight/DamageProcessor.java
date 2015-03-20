@@ -21,10 +21,18 @@ public class DamageProcessor {
                 resultDamageAmount = calculateResistantDamage(resultDamageAmount,resistance.getStrength());
             }
         }
+
+        //deal damage
+        target.takeDamage(resultDamageAmount);
     }
 
-    private static int calculateResistantDamage(int resultDamageAmount, int strength) {
-        //TODO implement
-        return resultDamageAmount;
+    private static int calculateResistantDamage(int resultDamageAmount, int resistanceStrength) {
+        return (int) Math.round(resultDamageAmount * getResistanceMultiplier(resistanceStrength));
+    }
+
+    private static double getResistanceMultiplier(int resistanceStrength){
+        double defConst=0.04;
+        double def = (resistanceStrength*defConst)/(1+resistanceStrength*defConst);
+        return def;
     }
 }
