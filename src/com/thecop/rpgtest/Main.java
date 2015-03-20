@@ -8,8 +8,28 @@ public class Main {
 
     public static void main(String[] args) {
         defenceCurveTest();
-
         System.out.println("Msven test!");
+
+    }
+
+    private static void defenceCurveTest(){
+        double defConst=0.04;
+        for (int i=-10;i<=1000;){
+            double def = (i*defConst)/(1+i*defConst);
+            System.out.println("Def="+i+"\t "+def);
+            if(i<20) {
+                i = i + 5;
+            }
+            else if(i<100){
+                i=i+10;
+            }
+            else{
+                i=i+100;
+            }
+        }
+    }
+
+    private void waitInput(){
         System.out.print("Enter something:");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -30,23 +50,6 @@ public class Main {
                 br.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-        }
-    }
-
-    private static void defenceCurveTest(){
-        double defConst=0.04;
-        for (int i=-10;i<=1000;){
-            double def = (i*defConst)/(1+i*defConst);
-            System.out.println("Def="+i+"\t "+def);
-            if(i<20) {
-                i = i + 5;
-            }
-            else if(i<100){
-                i=i+10;
-            }
-            else{
-                i=i+100;
             }
         }
     }
