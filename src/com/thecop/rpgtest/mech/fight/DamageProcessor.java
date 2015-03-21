@@ -27,15 +27,15 @@ public class DamageProcessor {
         }
         //deal damage
         target.takeDamage(resultDamageAmount);
-        Logger.log(target.getName() + " takes damage " + resultDamageAmount + " and has " + target.getHealthLeft() + " hp");
+        Logger.log(target.getName() + " takes damage " + resultDamageAmount + " and has " + target.getHealthString() + " hp");
         //TODO implement attacktype - if spell or ranged then no counterattack can be done
     }
 
     private static int calculateResistantDamage(int resultDamageAmount, int resistanceStrength) {
         double resMult = getResistanceMultiplier(resistanceStrength);
-        Logger.dlog("Resistance multiplier = " + Util.formatDouble(resMult,2));
+        Logger.dlog("Resistance multiplier = " + Util.formatDouble(resMult, 2));
         double damage = resultDamageAmount - resultDamageAmount * getResistanceMultiplier(resistanceStrength);
-        Logger.dlog("Damage reduced to = " + Util.formatDouble(damage,2));
+        Logger.dlog("Damage reduced to = " + Util.formatDouble(damage, 2));
         return (int) Math.round(resultDamageAmount - resultDamageAmount * getResistanceMultiplier(resistanceStrength));
     }
 

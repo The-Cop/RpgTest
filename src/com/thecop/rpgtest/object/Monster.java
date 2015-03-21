@@ -12,13 +12,15 @@ import java.util.Map;
  */
 public class Monster implements Attackable, Damageable {
     private int health;
+    private int maxHealth;
     private int baseAttack;
     private String name;
     private Map<ResistanceType, Resistance> resistances;
 
-    public Monster(String name,int health, int baseAttack) {
-        this.name=name;
+    public Monster(String name, int health, int baseAttack) {
+        this.name = name;
         this.health = health;
+        this.maxHealth = health;
         this.baseAttack = baseAttack;
         resistances = new HashMap<>();
     }
@@ -31,21 +33,21 @@ public class Monster implements Attackable, Damageable {
         return baseAttack;
     }
 
-    public void setResistance(Resistance resistance){
-        resistances.put(resistance.getType(),resistance);
+    public void setResistance(Resistance resistance) {
+        resistances.put(resistance.getType(), resistance);
     }
 
     @Override
     public void attack(Damageable target, AttackType type) {
 
-        Damage damage = new Damage(DamageType.PHYSICAL,baseAttack);
-        DamageProcessor.damage(this,target,damage,type);
+        Damage damage = new Damage(DamageType.PHYSICAL, baseAttack);
+        DamageProcessor.damage(this, target, damage, type);
     }
 
     @Override
     public void takeDamage(int damageAmount) {
-        health=health-damageAmount;
-        if(health<0)health=0;
+        health = health - damageAmount;
+        if (health < 0) health = 0;
     }
 
     @Override
@@ -59,8 +61,13 @@ public class Monster implements Attackable, Damageable {
     }
 
     @Override
+    public String getHealthString() {
+        return health + "/" + maxHealth;
+    }
+
+    @Override
     public boolean isAlive() {
-        return health>0;
+        return health > 0;
     }
 
     @Override

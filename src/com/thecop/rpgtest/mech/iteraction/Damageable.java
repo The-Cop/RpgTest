@@ -14,5 +14,7 @@ public interface Damageable extends Named {
 
     public int getHealthLeft();
 
+    public String getHealthString();
+
     public boolean isAlive();
 }
