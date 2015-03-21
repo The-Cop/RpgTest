@@ -19,4 +19,12 @@ public class Resistance {
     public int getStrength() {
         return strength;
     }
+
+    @Override
+    public String toString() {
+        return "Resistance{" +
+                "type=" + type +
+                ", strength=" + strength +
+                '}';
+    }
 }

@@ -9,5 +9,10 @@ import com.thecop.rpgtest.mech.fight.ResistanceType;
  */
 public interface Damageable extends Named {
     public void takeDamage(int damageAmount);
+
     public Resistance getResistance(ResistanceType type);
+
+    public int getHealthLeft();
+
+    public boolean isAlive();
 }

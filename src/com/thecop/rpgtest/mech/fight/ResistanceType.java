@@ -5,5 +5,5 @@ package com.thecop.rpgtest.mech.fight;
  */
 public enum ResistanceType {
     //order = priority
-    PHYSICAL,MAGIC,FIRE,ICE;
+    PHYSICAL, MAGIC, FIRE, ICE;
 }

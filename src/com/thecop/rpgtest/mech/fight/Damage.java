@@ -24,7 +24,6 @@ public class Damage {
     }
 
     /**
-     *
      * @return List of resistances that affect damage with this type
      */
     public List<ResistanceType> getResistanceTypes() {
