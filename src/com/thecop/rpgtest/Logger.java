@@ -8,11 +8,11 @@ public class Logger {
 
     public static void dlog(Object o) {
         if (debug) {
-            log(o);
+            print(o);
         }
     }
 
-    public static void log(Object o) {
+    public static void print(Object o) {
         System.out.println(o.toString());
     }
 }

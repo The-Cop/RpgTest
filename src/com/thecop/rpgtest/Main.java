@@ -1,24 +1,53 @@
 package com.thecop.rpgtest;
 
 import com.thecop.rpgtest.mech.fight.AttackType;
+import com.thecop.rpgtest.mech.fight.DamageType;
 import com.thecop.rpgtest.mech.fight.Resistance;
 import com.thecop.rpgtest.mech.fight.ResistanceType;
+import com.thecop.rpgtest.mech.magic.Spell;
+import com.thecop.rpgtest.mech.player.PlayerAction;
+import com.thecop.rpgtest.mech.screen.FightScreenController;
 import com.thecop.rpgtest.object.Monster;
+import com.thecop.rpgtest.object.Player;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import static com.thecop.rpgtest.Logger.print;
 
 public class Main {
 
     public static void main(String[] args) {
-        fightTest();
+        playerFightTest();
 
+    }
+    private static void playerFightTest() {
+        Monster m1 = new Monster( 100, 10,"Enemy",AttackType.MELEE);
+        Player p = new Player("Player",90,13);
+        p.getSpells().add(new Spell("I am spell :)",'s',10,10, DamageType.FIRE));
+
+
+        print("Fight:");
+        print(m1);
+        print(p);
+
+        boolean playerTurn = true;
+        FightScreenController fsc = new FightScreenController(p);
+        while (p.isAlive() && m1.isAlive()) {
+            if (playerTurn) {
+                PlayerAction action = fsc.choosePlayerAction();
+                print("Action = " + action);
+                p.performAction(action,m1);
+                playerTurn = false;
+            } else {
+                m1.attack(p);
+                playerTurn = true;
+            }
+            print("=======END OF TURN=======");
+        }
+        print("Fight finished");
     }
 
     private static void fightTest() {
-        Monster m1 = new Monster("Good", 100, 10);
-        Monster m2 = new Monster("Bad", 85, 13);
+        Monster m1 = new Monster( 100, 10,"Good",AttackType.MELEE);
+        Monster m2 = new Monster( 85, 13,"Bad",AttackType.MELEE);
         m1.setResistance(new Resistance(ResistanceType.FIRE, 5));
         m1.setResistance(new Resistance(ResistanceType.MAGIC, 6));
         m1.setResistance(new Resistance(ResistanceType.PHYSICAL, 5));
@@ -26,59 +55,22 @@ public class Main {
         m2.setResistance(new Resistance(ResistanceType.FIRE, 7));
         m2.setResistance(new Resistance(ResistanceType.MAGIC, 8));
         m2.setResistance(new Resistance(ResistanceType.PHYSICAL, 8));
-        Logger.log("Fight:");
-        Logger.log(m1);
-        Logger.log(m2);
+        print("Fight:");
+        print(m1);
+        print(m2);
         boolean m1Turn = true;
         while (m1.isAlive() && m2.isAlive()) {
             if (m1Turn) {
-                m1.attack(m2, AttackType.MELEE);
+                m1.attack(m2);
                 m1Turn = false;
             } else {
-                m2.attack(m1, AttackType.MELEE);
+                m2.attack(m1);
                 m1Turn = true;
             }
-            Logger.log("=======END OF TURN=======");
+            print("=======END OF TURN=======");
         }
-        Logger.log("Fight finished");
+        print("Fight finished");
     }
 
-    private static void defenceCurveTest() {
-        double defConst = 0.04;
-        for (int i = -10; i <= 1000; ) {
-            double def = (i * defConst) / (1 + i * defConst);
-            System.out.println("Def=" + i + "\t " + def);
-            if (i < 20) {
-                i = i + 5;
-            } else if (i < 100) {
-                i = i + 10;
-            } else {
-                i = i + 100;
-            }
-        }
-    }
 
-    private void waitInput() {
-        System.out.print("Enter something:");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            int c;
-            while ((c = br.read()) != -1) {
-                char character = (char) c;
-                System.out.println("Entered: " + character);
-                if (character == 'q') {
-                    break;
-                }
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

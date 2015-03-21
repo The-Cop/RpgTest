@@ -1,5 +1,8 @@
 package com.thecop.rpgtest.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
@@ -19,5 +22,26 @@ public class Util {
         }
         DecimalFormat df = new DecimalFormat(formatSb.toString(), otherSymbols);
         return df.format(x);
+    }
+
+    public static char input() {
+        char result='0';
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            int c;
+            while ((c = br.read()) != -1) {
+                result = (char) c;
+                break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+//            try {
+//                br.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        }
+        return result;
     }
 }

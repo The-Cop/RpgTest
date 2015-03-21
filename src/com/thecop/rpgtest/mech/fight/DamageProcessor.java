@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class DamageProcessor {
     public static void damage(Attackable attacker, Damageable target, Damage damage, AttackType attackType) {
-        Logger.log(attacker.getName() + " attacks " + target.getName() + " with damage " + damage.getAmount());
+        Logger.print(attacker.getName() + " attacks " + target.getName() + " with damage " + damage.getAmount());
         int resultDamageAmount = damage.getAmount();
         //get resistance types for this damage type
         List<ResistanceType> resistanceTypes = damage.getResistanceTypes();
@@ -27,7 +27,7 @@ public class DamageProcessor {
         }
         //deal damage
         target.takeDamage(resultDamageAmount);
-        Logger.log(target.getName() + " takes damage " + resultDamageAmount + " and has " + target.getHealthString() + " hp");
+        Logger.print(target.getName() + " takes damage " + resultDamageAmount + " and has " + target.getHealthString() + " hp");
         //TODO implement attacktype - if spell or ranged then no counterattack can be done
     }
 
