@@ -1,5 +1,6 @@
 package com.thecop.rpgtest.mech.fight;
 
+import com.thecop.rpgtest.Logger;
 import com.thecop.rpgtest.mech.iteraction.Attackable;
 import com.thecop.rpgtest.mech.iteraction.Damageable;
 
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public class DamageProcessor {
     public static void damage(Attackable attacker, Damageable target, Damage damage){
+        Logger.log(attacker.getName() + " attacks " + target.getName() + " with damage " + damage.getAmount());
         int resultDamageAmount=damage.getAmount();
         //get resistance types for this damage type
         List<ResistanceType> resistanceTypes = damage.getResistanceTypes();
@@ -21,9 +23,9 @@ public class DamageProcessor {
                 resultDamageAmount = calculateResistantDamage(resultDamageAmount,resistance.getStrength());
             }
         }
-
         //deal damage
         target.takeDamage(resultDamageAmount);
+        Logger.log(target.getName() + " takes damage " + resultDamageAmount);
     }
 
     private static int calculateResistantDamage(int resultDamageAmount, int resistanceStrength) {

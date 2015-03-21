@@ -23,6 +23,10 @@ public class Damage {
         return amount;
     }
 
+    /**
+     *
+     * @return List of resistances that affect damage with this type
+     */
     public List<ResistanceType> getResistanceTypes() {
         List<ResistanceType> result = new ArrayList<>();
         if (type.isMagic()) {
