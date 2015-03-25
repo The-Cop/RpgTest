@@ -1,6 +1,6 @@
 package com.thecop.rpgtest.mech.iteraction;
 
-import com.thecop.rpgtest.mech.magic.Spell;
+import com.thecop.rpgtest.mech.spell.Spell;
 
 import java.util.List;
 
@@ -9,7 +9,10 @@ import java.util.List;
  */
 public interface SpellCastable {
     public List<Spell> getSpells();
-    public void castSpell(Spell spell, Damageable target);
+    public List<Spell> getUnmodifiedSpells();
+    public void castSpell(Spell spell, Fightable target);
     public boolean canCastSpell(Spell spell);
+
+
 
 }

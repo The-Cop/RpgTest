@@ -1,6 +1,6 @@
 package com.thecop.rpgtest.mech.player;
 
-import com.thecop.rpgtest.mech.magic.Spell;
+import com.thecop.rpgtest.mech.spell.Spell;
 
 /**
  * Created by TheCop on 21.03.2015.

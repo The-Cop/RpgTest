@@ -1,90 +1,32 @@
 package com.thecop.rpgtest.object;
 
-import com.thecop.rpgtest.mech.fight.*;
-import com.thecop.rpgtest.mech.iteraction.Attackable;
-import com.thecop.rpgtest.mech.iteraction.Damageable;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.thecop.rpgtest.mech.fight.AttackRange;
+import com.thecop.rpgtest.mech.fight.Damage;
+import com.thecop.rpgtest.mech.fight.DamageProcessor;
+import com.thecop.rpgtest.mech.iteraction.Fightable;
+import com.thecop.rpgtest.mech.spell.Spell;
 
 /**
  * Created by Admin on 19.03.2015.
  */
-public class Monster implements Attackable, Damageable {
-    private int health;
-    private int maxHealth;
+public class Monster extends GameChar{
     private int baseAttack;
-    private String name;
-    private AttackType usualAttackType;
-    private Map<ResistanceType, Resistance> resistances;
+    private AttackRange baseAttackRange;
 
-
-    public Monster(int health, int baseAttack, String name, AttackType usualAttackType) {
-        this.health = health;
-        this.maxHealth = health;
+    public Monster(String name, int health, int maxHealth, int mana, int maxMana, int baseAttack, AttackRange baseAttackRange) {
+        super(name, health, maxHealth, mana, maxMana);
         this.baseAttack = baseAttack;
-        this.name = name;
-        this.usualAttackType = usualAttackType;
-        resistances = new HashMap<>();
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public int getBaseAttack() {
-        return baseAttack;
-    }
-
-    public void setResistance(Resistance resistance) {
-        resistances.put(resistance.getType(), resistance);
+        this.baseAttackRange = baseAttackRange;
     }
 
     @Override
-    public void attack(Damageable target) {
-
-        Damage damage = new Damage(DamageType.PHYSICAL, baseAttack);
-        DamageProcessor.damage(this, target, damage, usualAttackType);
+    public void attack(Fightable target) {
+        Damage damage = new Damage(baseAttack);
+        DamageProcessor.damage(this, target, damage, baseAttackRange);
     }
 
     @Override
-    public void takeDamage(int damageAmount) {
-        health = health - damageAmount;
-        if (health < 0) health = 0;
-    }
+    public void castSpell(Spell spell, Fightable target) {
 
-    @Override
-    public Resistance getResistance(ResistanceType type) {
-        return resistances.get(type);
-    }
-
-    @Override
-    public int getHealthLeft() {
-        return getHealth();
-    }
-
-    @Override
-    public String getHealthString() {
-        return health + "/" + maxHealth;
-    }
-
-    @Override
-    public boolean isAlive() {
-        return health > 0;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        return "Monster{" +
-                "health=" + health +
-                ", baseAttack=" + baseAttack +
-                ", name='" + name + '\'' +
-                ", resistances=" + resistances +
-                '}';
     }
 }

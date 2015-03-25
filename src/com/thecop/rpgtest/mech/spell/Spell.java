@@ -1,4 +1,4 @@
-package com.thecop.rpgtest.mech.magic;
+package com.thecop.rpgtest.mech.spell;
 
 import com.thecop.rpgtest.mech.fight.DamageType;
 
@@ -11,14 +11,27 @@ public class Spell {
     private int manaCost;
     private int baseDamage;
     private DamageType damageType;
+    private SpellTargetType targetType;
 
-    public Spell(String name, char controlChar, int manaCost, int baseDamage, DamageType damageType) {
+
+    public Spell(String name, char controlChar, int manaCost, int baseDamage, DamageType damageType, SpellTargetType targetType) {
         this.name = name;
         this.controlChar = controlChar;
         this.manaCost = manaCost;
         this.baseDamage = baseDamage;
         this.damageType = damageType;
+        this.targetType = targetType;
     }
+
+    public Spell(Spell other) {
+        this.name = other.name;
+        this.controlChar = other.controlChar;
+        this.manaCost = other.manaCost;
+        this.baseDamage = other.baseDamage;
+        this.damageType = other.damageType;
+        this.targetType = other.targetType;
+    }
+
 
     public int getManaCost() {
         return manaCost;
@@ -51,4 +64,7 @@ public class Spell {
         return damageType;
     }
 
+    public SpellTargetType getTargetType() {
+        return targetType;
+    }
 }

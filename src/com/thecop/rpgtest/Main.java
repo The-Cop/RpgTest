@@ -1,10 +1,10 @@
 package com.thecop.rpgtest;
 
-import com.thecop.rpgtest.mech.fight.AttackType;
+import com.thecop.rpgtest.mech.fight.AttackRange;
 import com.thecop.rpgtest.mech.fight.DamageType;
 import com.thecop.rpgtest.mech.fight.Resistance;
 import com.thecop.rpgtest.mech.fight.ResistanceType;
-import com.thecop.rpgtest.mech.magic.Spell;
+import com.thecop.rpgtest.mech.spell.Spell;
 import com.thecop.rpgtest.mech.player.PlayerAction;
 import com.thecop.rpgtest.mech.screen.FightScreenController;
 import com.thecop.rpgtest.object.Monster;
@@ -19,7 +19,7 @@ public class Main {
 
     }
     private static void playerFightTest() {
-        Monster m1 = new Monster( 100, 10,"Enemy",AttackType.MELEE);
+        Monster m1 = new Monster( 100, 10,"Enemy", AttackRange.MELEE);
         Player p = new Player("Player",90,13);
         p.getSpells().add(new Spell("I am spell :)",'s',10,10, DamageType.FIRE));
 
@@ -46,8 +46,8 @@ public class Main {
     }
 
     private static void fightTest() {
-        Monster m1 = new Monster( 100, 10,"Good",AttackType.MELEE);
-        Monster m2 = new Monster( 85, 13,"Bad",AttackType.MELEE);
+        Monster m1 = new Monster( 100, 10,"Good", AttackRange.MELEE);
+        Monster m2 = new Monster( 85, 13,"Bad", AttackRange.MELEE);
         m1.setResistance(new Resistance(ResistanceType.FIRE, 5));
         m1.setResistance(new Resistance(ResistanceType.MAGIC, 6));
         m1.setResistance(new Resistance(ResistanceType.PHYSICAL, 5));

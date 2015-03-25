@@ -4,15 +4,18 @@ package com.thecop.rpgtest.mech.fight;
  * Created by Admin on 20.03.2015.
  */
 public class Resistance {
-    private ResistanceType type;
+    private DamageType type;
     private int strength;
 
-    public Resistance(ResistanceType type, int strength) {
+    public Resistance(DamageType type, int strength) {
+        if(type==DamageType.PURE){
+            throw new IllegalArgumentException("NO RESISTANCE FOR PURE DAMAGE!!!!1111");
+        }
         this.type = type;
         this.strength = strength;
     }
 
-    public ResistanceType getType() {
+    public DamageType getType() {
         return type;
     }
 

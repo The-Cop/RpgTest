@@ -1,6 +1,6 @@
 package com.thecop.rpgtest.mech.screen;
 
-import com.thecop.rpgtest.mech.magic.Spell;
+import com.thecop.rpgtest.mech.spell.Spell;
 import com.thecop.rpgtest.mech.player.PlayerAction;
 import com.thecop.rpgtest.mech.player.PlayerActionType;
 import com.thecop.rpgtest.object.Player;
