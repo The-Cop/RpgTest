@@ -1,7 +1,6 @@
 package com.thecop.rpgtest.mech.fight;
 
 import com.thecop.rpgtest.Logger;
-import com.thecop.rpgtest.mech.iteraction.Fightable;
 import com.thecop.rpgtest.object.GameChar;
 import com.thecop.rpgtest.utils.Util;
 
@@ -11,7 +10,7 @@ import static com.thecop.rpgtest.Logger.print;
  * Created by Admin on 20.03.2015.
  */
 public class DamageProcessor {
-    public static void attackDamage(Fightable attacker, GameChar target, Damage damage, AttackRange attackRange) {
+    public static void attackDamage(GameChar attacker, GameChar target, Damage damage, AttackRange attackRange) {
         print(attacker.getName() + " attacks " + target.getName() + " with damage " + damage.getAmount());
         calculateAndDealDamage(target, damage.getAmount(), damage.damageType);
         if(attackRange==AttackRange.MELEE) {
@@ -32,12 +31,12 @@ public class DamageProcessor {
         if(dType.isMagic()){
             Resistance magicResistance = target.getResistance(DamageType.MAGIC);
             if (resistance != null) {
-                resultDamageAmount = calculateResistantDamage(resultDamageAmount, magicResistance.getStrength());
+                resultDamageAmount = calculateResistantDamage(resultDamageAmount, magicResistance);
             }
         }
         //
         if (resistance != null) {
-            resultDamageAmount = calculateResistantDamage(resultDamageAmount, resistance.getStrength());
+            resultDamageAmount = calculateResistantDamage(resultDamageAmount, resistance);
         }
 
         //deal damage
@@ -47,12 +46,12 @@ public class DamageProcessor {
 
 
 
-    private static int calculateResistantDamage(int resultDamageAmount, int resistanceStrength) {
-        double resMult = getResistanceMultiplier(resistanceStrength);
-        Logger.dlog("Resistance multiplier = " + Util.formatDouble(resMult, 2));
-        double damage = resultDamageAmount - resultDamageAmount * getResistanceMultiplier(resistanceStrength);
+    private static int calculateResistantDamage(int resultDamageAmount, Resistance resistance) {
+        double resMult = getResistanceMultiplier(resistance.getStrength());
+        Logger.dlog(resistance.getType() + " resistance multiplier = " + Util.formatDouble(resMult, 2));
+        double damage = resultDamageAmount - resultDamageAmount * getResistanceMultiplier(resistance.getStrength());
         Logger.dlog("Damage reduced to = " + Util.formatDouble(damage, 2));
-        return (int) Math.round(resultDamageAmount - resultDamageAmount * getResistanceMultiplier(resistanceStrength));
+        return (int) Math.round(resultDamageAmount - resultDamageAmount * getResistanceMultiplier(resistance.getStrength()));
     }
 
     private static double getResistanceMultiplier(int resistanceStrength) {

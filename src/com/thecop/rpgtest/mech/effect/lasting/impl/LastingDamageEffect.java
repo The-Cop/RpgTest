@@ -10,16 +10,20 @@ import com.thecop.rpgtest.object.GameChar;
 /**
  * Created by TheCop on 25.03.2015.
  */
-public class LastingDamageEffect extends LastingEffect implements GameCharEffect {
+public class LastingDamageEffect extends LastingEffect<LastingDamageEffect> implements GameCharEffect {
     Damage damage;
 
-    public LastingDamageEffect(String name, int length, int damage, DamageType damageType) {
-        super(name, length);
+    public LastingDamageEffect(String name, int length, int damage, DamageType damageType, String desc) {
+        super(name, length,desc);
         this.damage = new Damage(damage,damageType);
     }
 
     @Override
     public void apply(GameChar c) {
         DamageProcessor.effectDamage(c,damage,name);
+    }
+
+    public Damage getDamage() {
+        return damage;
     }
 }

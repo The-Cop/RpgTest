@@ -7,14 +7,20 @@ import com.thecop.rpgtest.object.GameChar;
 /**
  * Created by TheCop on 24.03.2015.
  */
-public class Heal extends InstantEffect implements GameCharEffect {
+public class InstantHeal extends InstantEffect<InstantHeal> implements GameCharEffect {
 
     private int healStrength;
 
-    public Heal(String name, int healStrength) {
+    public InstantHeal(String name, int healStrength) {
         super(name);
         this.healStrength = healStrength;
     }
+
+    private InstantHeal(InstantHeal other) {
+        super(other);
+        this.healStrength = other.healStrength;
+    }
+
 
     @Override
     public void apply(GameChar c) {
@@ -22,4 +28,13 @@ public class Heal extends InstantEffect implements GameCharEffect {
     }
 
 
+    @Override
+    public void applyInstantEffect(GameChar c) {
+        apply(c);
+    }
+
+    @Override
+    public InstantHeal getCopy() {
+        return new InstantHeal(this);
+    }
 }

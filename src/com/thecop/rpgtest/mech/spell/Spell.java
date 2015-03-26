@@ -1,70 +1,64 @@
 package com.thecop.rpgtest.mech.spell;
 
-import com.thecop.rpgtest.mech.fight.DamageType;
+import com.thecop.rpgtest.mech.effect.Effect;
 
 /**
  * Created by TheCop on 21.03.2015.
  */
 public class Spell {
     private String name;
-    private char controlChar;
+    private String controlString;
     private int manaCost;
-    private int baseDamage;
-    private DamageType damageType;
     private SpellTargetType targetType;
+    private Effect effect;
+    private boolean isModified=false;
 
-
-    public Spell(String name, char controlChar, int manaCost, int baseDamage, DamageType damageType, SpellTargetType targetType) {
+    public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, Effect effect) {
         this.name = name;
-        this.controlChar = controlChar;
+        this.controlString = controlString;
         this.manaCost = manaCost;
-        this.baseDamage = baseDamage;
-        this.damageType = damageType;
         this.targetType = targetType;
+        this.effect = effect;
     }
 
     public Spell(Spell other) {
         this.name = other.name;
-        this.controlChar = other.controlChar;
+        this.controlString = other.controlString;
         this.manaCost = other.manaCost;
-        this.baseDamage = other.baseDamage;
-        this.damageType = other.damageType;
         this.targetType = other.targetType;
+        this.effect = other.getEffect();
     }
 
-
-    public int getManaCost() {
-        return manaCost;
-    }
-
-    public char getControlChar() {
-        return controlChar;
-    }
 
     public String getName() {
         return name;
     }
 
-    public int getBaseDamage() {
-        return baseDamage;
+    public String getControlString() {
+        return controlString;
     }
 
-    @Override
-    public String toString() {
-        return "Spell{" +
-                "name='" + name + '\'' +
-                ", controlChar=" + controlChar +
-                ", manaCost=" + manaCost +
-                ", baseDamage=" + baseDamage +
-                ", damageType=" + damageType +
-                '}';
-    }
-
-    public DamageType getDamageType() {
-        return damageType;
+    public int getManaCost() {
+        return manaCost;
     }
 
     public SpellTargetType getTargetType() {
         return targetType;
+    }
+
+    /**
+     *
+     * @return effect copy
+     */
+    public Effect getEffect() {
+        return effect;
+    }
+
+    public boolean isModified() {
+        return isModified;
+    }
+
+    public void setModified(boolean isModified) {
+        this.isModified = isModified;
     }
 }

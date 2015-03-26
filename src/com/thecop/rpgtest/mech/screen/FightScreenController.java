@@ -3,7 +3,7 @@ package com.thecop.rpgtest.mech.screen;
 import com.thecop.rpgtest.mech.spell.Spell;
 import com.thecop.rpgtest.mech.player.PlayerAction;
 import com.thecop.rpgtest.mech.player.PlayerActionType;
-import com.thecop.rpgtest.object.Player;
+import com.thecop.rpgtest.object.PlayerChar;
 import com.thecop.rpgtest.utils.Util;
 
 import java.util.List;
@@ -14,10 +14,11 @@ import static com.thecop.rpgtest.Logger.print;
  * Created by TheCop on 21.03.2015.
  */
 public class FightScreenController {
-    private Player player;
 
-    public FightScreenController(Player player) {
-        this.player = player;
+    private PlayerChar playerChar;
+
+    public FightScreenController(PlayerChar playerChar) {
+        this.playerChar = playerChar;
     }
 
     public PlayerAction choosePlayerAction() {
@@ -26,16 +27,16 @@ public class FightScreenController {
             print("a - Attack");
             print("s - Use a spell");
             print("r - Run like hell");
-            switch (Util.input()){
-                case 'a':
+            switch (Command.getCommand(Util.input())){
+                case ATTACK:
                     return new PlayerAction(PlayerActionType.USUAL_ATTACK,null);
-                case 's':
+                case SPELL:
                     PlayerAction action = chooseSpell();
                     if(action!=null){
                         return action;
                     }
                      break;
-                case 'r':
+                case RUN:
                     print("Implement runaway");
                     break;
             }
@@ -43,17 +44,17 @@ public class FightScreenController {
     }
 
     private PlayerAction chooseSpell(){
-        List<Spell> spells = player.getSpells();
+        List<Spell> spells = playerChar.getSpells();
         while (true) {
             printSpellList(spells);
             print("q - back");
-            char c = Util.input();
-            if(c=='q'){
+            String input = Util.input();
+            if(Command.getCommand(input)==Command.BACK){
                 return null;
             }
             for (Spell spell : spells) {
-                if(player.canCastSpell(spell)){
-                    if(spell.getControlChar()==c){
+                if(playerChar.canCastSpell(spell)){
+                    if(spell.getControlString().equalsIgnoreCase(input)){
                         return new PlayerAction(PlayerActionType.SPELL,spell);
                     }
                 }
@@ -68,11 +69,11 @@ public class FightScreenController {
         }
         print("Your spells:");
         for (Spell spell : spells) {
-            if(player.canCastSpell(spell)) {
-                print(spell.getControlChar() + " - " + spell.getName());
+            if(playerChar.canCastSpell(spell)) {
+                print(spell.getControlString() + " - " + spell.getName());
             }
             else {
-                print(spell.getControlChar() + " - " + spell.getName() + " - not enough mana");
+                print(spell.getControlString() + " - " + spell.getName() + " - not enough mana");
             }
         }
     }

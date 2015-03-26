@@ -4,11 +4,7 @@ import com.thecop.rpgtest.mech.effect.AttackModifier;
 import com.thecop.rpgtest.mech.effect.Effect;
 import com.thecop.rpgtest.mech.effect.SpellModifier;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
-import com.thecop.rpgtest.mech.fight.Damage;
-import com.thecop.rpgtest.mech.fight.DamageType;
-import com.thecop.rpgtest.mech.fight.Resistance;
-import com.thecop.rpgtest.mech.iteraction.Fightable;
-import com.thecop.rpgtest.mech.iteraction.SpellCastable;
+import com.thecop.rpgtest.mech.fight.*;
 import com.thecop.rpgtest.mech.spell.Spell;
 
 import java.util.ArrayList;
@@ -19,7 +15,7 @@ import java.util.Map;
 /**
  * Created by TheCop on 24.03.2015.
  */
-public abstract class GameChar implements Fightable, SpellCastable {
+public abstract class GameChar {
     protected String name;
 
     protected int health;
@@ -28,20 +24,30 @@ public abstract class GameChar implements Fightable, SpellCastable {
     protected int mana;
     protected int maxMana;
 
+    protected AttackRange baseAttackRange;
+
     protected Map<DamageType, Resistance> resistances;
     protected List<LastingEffect> lastingEffects;
     protected List<Spell> spells;
 
-    protected GameChar() {
-        init();
-    }
 
-    public GameChar(String name, int health, int maxHealth, int mana, int maxMana) {
+    public GameChar(String name, int health, int maxHealth, int mana, int maxMana, AttackRange baseAttackRange) {
         this.name = name;
         this.health = health;
         this.maxHealth = maxHealth;
         this.mana = mana;
         this.maxMana = maxMana;
+        this.baseAttackRange = baseAttackRange;
+        init();
+    }
+
+    public GameChar(String name, int health,  int mana, AttackRange baseAttackRange) {
+        this.name = name;
+        this.health = health;
+        this.maxHealth = health;
+        this.mana = mana;
+        this.maxMana = mana;
+        this.baseAttackRange = baseAttackRange;
         init();
     }
 
@@ -55,44 +61,50 @@ public abstract class GameChar implements Fightable, SpellCastable {
         lastingEffects.add(e);
     }
 
-    public void setResistance(Resistance resistance) {
+    public void addSpell(Spell s) {
+        spells.add(s);
+    }
+
+    public void addResistance(Resistance resistance) {
         resistances.put(resistance.getType(), resistance);
     }
 
-    @Override
+    public void attack(GameChar target){
+        if(canAttack()) {
+            DamageProcessor.attackDamage(this, target, getAttack(), baseAttackRange);
+        }
+    }
+
     public void takeDamage(int damageAmount) {
+        //TODO get here damage processing
+        //TODO take Damage argument
+        //TODO process it through IncomingDamageEffects
         health = health - damageAmount;
         if (health < 0) {
             health = 0;
         }
     }
 
-    @Override
     public Resistance getResistance(DamageType type) {
         return resistances.get(type);
     }
 
-    @Override
     public int getHealthLeft() {
         return health;
     }
 
-    @Override
     public String getHealthString() {
         return health + "/" + maxHealth;
     }
 
-    @Override
     public boolean isAlive() {
         return health > 0;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public List<Spell> getSpells() {
         List<Spell> modSpells = new ArrayList<>();
         for (Spell spell : spells) {
@@ -104,12 +116,10 @@ public abstract class GameChar implements Fightable, SpellCastable {
         return spells;
     }
 
-    @Override
     public List<Spell> getUnmodifiedSpells() {
         return spells;
     }
 
-    @Override
     public boolean canCastSpell(Spell spell) {
         Spell modSpell = getModifiedSpell(spell);
         if(modSpell==null){
@@ -118,12 +128,21 @@ public abstract class GameChar implements Fightable, SpellCastable {
         return mana >= modSpell.getManaCost();
     }
 
-    @Override
+    public void castSpell(Spell spell, GameChar target){
+        spell=getModifiedSpell(spell);
+        mana=mana-spell.getManaCost();
+        SpellProcessor.applySpell(spell,this,target);
+    }
+
     public boolean canAttack() {
         return getAttack()!=null;
     }
 
     public Spell getModifiedSpell(Spell spell) {
+        //if already modified - return
+        if(spell.isModified()){
+            return spell;
+        }
         Spell spellCopy = new Spell(spell);
         for (Effect effect : lastingEffects) {
             if (effect instanceof SpellModifier) {
@@ -134,6 +153,7 @@ public abstract class GameChar implements Fightable, SpellCastable {
                 }
             }
         }
+        spellCopy.setModified(true);
         return spellCopy;
     }
 
@@ -181,5 +201,9 @@ public abstract class GameChar implements Fightable, SpellCastable {
         if (this.health > maxHealth) {
             this.health = maxHealth;
         }
+    }
+
+    public List<LastingEffect> getLastingEffects() {
+        return lastingEffects;
     }
 }

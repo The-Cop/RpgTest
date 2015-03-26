@@ -2,31 +2,25 @@ package com.thecop.rpgtest.object;
 
 import com.thecop.rpgtest.mech.fight.AttackRange;
 import com.thecop.rpgtest.mech.fight.Damage;
-import com.thecop.rpgtest.mech.fight.DamageProcessor;
-import com.thecop.rpgtest.mech.iteraction.Fightable;
-import com.thecop.rpgtest.mech.spell.Spell;
 
 /**
  * Created by Admin on 19.03.2015.
  */
 public class Monster extends GameChar{
     private int baseAttack;
-    private AttackRange baseAttackRange;
 
-    public Monster(String name, int health, int maxHealth, int mana, int maxMana, int baseAttack, AttackRange baseAttackRange) {
-        super(name, health, maxHealth, mana, maxMana);
+    public Monster(String name, int health, int maxHealth, int mana, int maxMana, AttackRange baseAttackRange, int baseAttack) {
+        super(name, health, maxHealth, mana, maxMana, baseAttackRange);
         this.baseAttack = baseAttack;
-        this.baseAttackRange = baseAttackRange;
+    }
+
+    public Monster(String name, int health, int mana, AttackRange baseAttackRange, int baseAttack) {
+        super(name, health, mana, baseAttackRange);
+        this.baseAttack = baseAttack;
     }
 
     @Override
-    public void attack(Fightable target) {
-        Damage damage = new Damage(baseAttack);
-        DamageProcessor.damage(this, target, damage, baseAttackRange);
-    }
-
-    @Override
-    public void castSpell(Spell spell, Fightable target) {
-
+    protected Damage getBaseUnmodifiedAttack() {
+        return new Damage(baseAttack);
     }
 }

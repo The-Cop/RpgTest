@@ -1,16 +1,17 @@
 package com.thecop.rpgtest;
 
+import com.thecop.rpgtest.mech.effect.instant.impl.InstantDamageEffect;
+import com.thecop.rpgtest.mech.effect.instant.impl.InstantHeal;
+import com.thecop.rpgtest.mech.effect.lasting.impl.LastingDamageEffect;
 import com.thecop.rpgtest.mech.fight.AttackRange;
 import com.thecop.rpgtest.mech.fight.DamageType;
+import com.thecop.rpgtest.mech.fight.FightProcessor;
 import com.thecop.rpgtest.mech.fight.Resistance;
-import com.thecop.rpgtest.mech.fight.ResistanceType;
 import com.thecop.rpgtest.mech.spell.Spell;
-import com.thecop.rpgtest.mech.player.PlayerAction;
-import com.thecop.rpgtest.mech.screen.FightScreenController;
+import com.thecop.rpgtest.mech.spell.SpellTargetType;
+import com.thecop.rpgtest.object.GameChar;
 import com.thecop.rpgtest.object.Monster;
-import com.thecop.rpgtest.object.Player;
-
-import static com.thecop.rpgtest.Logger.print;
+import com.thecop.rpgtest.object.PlayerChar;
 
 public class Main {
 
@@ -18,59 +19,47 @@ public class Main {
         playerFightTest();
 
     }
+
+    private static PlayerChar getPlayer(){
+        PlayerChar p = new PlayerChar("HERO",1000,250,AttackRange.MELEE,12);
+        p.addSpell(new Spell("Lightning","l",3, SpellTargetType.ENEMY,new InstantDamageEffect("Electro damage effect",7,DamageType.ELECTRIC)));
+        p.addSpell(new Spell("Pure force","p",7, SpellTargetType.ENEMY,new InstantDamageEffect("Pure force effect",7,DamageType.PURE)));
+        p.addSpell(new Spell("Burn","b",4, SpellTargetType.ENEMY,new LastingDamageEffect("Burning",3,20,DamageType.FIRE,"Slowly burns your body")));
+        p.addSpell(new Spell("Instant heal","i",10, SpellTargetType.FRIENDLY,new InstantHeal("Instant healing",10)));
+
+        p.addResistance(new Resistance(DamageType.PHYSICAL,3));
+        p.addResistance(new Resistance(DamageType.FIRE,2));
+        p.addResistance(new Resistance(DamageType.ICE,1));
+        p.addResistance(new Resistance(DamageType.MAGIC,0));
+
+        return p;
+
+    }
+
+    private static Monster getMonster(){
+        Monster p = new Monster("BIG RAT",1100,40,AttackRange.MELEE,10);
+        p.addSpell(new Spell("Lightning","l",3, SpellTargetType.ENEMY,new InstantDamageEffect("Electro damage effect",7,DamageType.ELECTRIC)));
+        p.addSpell(new Spell("Pure force","p",7, SpellTargetType.ENEMY,new InstantDamageEffect("Pure force effect",7,DamageType.PURE)));
+        p.addSpell(new Spell("Burn","b",4, SpellTargetType.ENEMY,new LastingDamageEffect("Burning",3,2,DamageType.FIRE,"Slowly burns your body")));
+        p.addSpell(new Spell("Instant heal","i",10, SpellTargetType.FRIENDLY,new InstantHeal("Instant healing",10)));
+
+        p.addResistance(new Resistance(DamageType.PHYSICAL,0));
+        p.addResistance(new Resistance(DamageType.FIRE,3));
+        p.addResistance(new Resistance(DamageType.ICE,0));
+        p.addResistance(new Resistance(DamageType.MAGIC,2));
+
+        return p;
+    }
+
     private static void playerFightTest() {
-        Monster m1 = new Monster( 100, 10,"Enemy", AttackRange.MELEE);
-        Player p = new Player("Player",90,13);
-        p.getSpells().add(new Spell("I am spell :)",'s',10,10, DamageType.FIRE));
+        PlayerChar p = getPlayer();
+        Monster m = getMonster();
+        FightProcessor fp = new FightProcessor(p,m);
+        GameChar winner = fp.fight();
 
-
-        print("Fight:");
-        print(m1);
-        print(p);
-
-        boolean playerTurn = true;
-        FightScreenController fsc = new FightScreenController(p);
-        while (p.isAlive() && m1.isAlive()) {
-            if (playerTurn) {
-                PlayerAction action = fsc.choosePlayerAction();
-                print("Action = " + action);
-                p.performAction(action,m1);
-                playerTurn = false;
-            } else {
-                m1.attack(p);
-                playerTurn = true;
-            }
-            print("=======END OF TURN=======");
-        }
-        print("Fight finished");
     }
 
-    private static void fightTest() {
-        Monster m1 = new Monster( 100, 10,"Good", AttackRange.MELEE);
-        Monster m2 = new Monster( 85, 13,"Bad", AttackRange.MELEE);
-        m1.setResistance(new Resistance(ResistanceType.FIRE, 5));
-        m1.setResistance(new Resistance(ResistanceType.MAGIC, 6));
-        m1.setResistance(new Resistance(ResistanceType.PHYSICAL, 5));
 
-        m2.setResistance(new Resistance(ResistanceType.FIRE, 7));
-        m2.setResistance(new Resistance(ResistanceType.MAGIC, 8));
-        m2.setResistance(new Resistance(ResistanceType.PHYSICAL, 8));
-        print("Fight:");
-        print(m1);
-        print(m2);
-        boolean m1Turn = true;
-        while (m1.isAlive() && m2.isAlive()) {
-            if (m1Turn) {
-                m1.attack(m2);
-                m1Turn = false;
-            } else {
-                m2.attack(m1);
-                m1Turn = true;
-            }
-            print("=======END OF TURN=======");
-        }
-        print("Fight finished");
-    }
 
 
 }

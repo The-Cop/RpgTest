@@ -24,24 +24,14 @@ public class Util {
         return df.format(x);
     }
 
-    public static char input() {
-        char result='0';
+    public static String input() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            int c;
-            while ((c = br.read()) != -1) {
-                result = (char) c;
-                break;
-            }
+           return br.readLine().toLowerCase();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-//            try {
-//                br.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
-        return result;
+        return null;
     }
 }

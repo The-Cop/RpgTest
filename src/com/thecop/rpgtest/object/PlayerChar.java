@@ -4,34 +4,20 @@ import com.thecop.rpgtest.mech.fight.AttackRange;
 import com.thecop.rpgtest.mech.fight.Damage;
 import com.thecop.rpgtest.mech.fight.DamageProcessor;
 import com.thecop.rpgtest.mech.fight.DamageType;
-import com.thecop.rpgtest.mech.iteraction.Fightable;
-import com.thecop.rpgtest.mech.spell.Spell;
 import com.thecop.rpgtest.mech.player.PlayerAction;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Admin on 19.03.2015.
  */
-public class Player extends GameChar {
+public class PlayerChar extends GameChar {
 
     private int baseAttackDamage;
-    private List<Spell> spells;
 
-    public Player(String name, int health, int baseAttack) {
-        super();
-        this.name = name;
-        this.health = health;
-        this.maxHealth = health;
-        this.baseAttackDamage = baseAttack;
-        resistances = new HashMap<>();
-        spells = new ArrayList<>();
+    public PlayerChar(String name, int health, int mana, AttackRange baseAttackRange, int baseAttackDamage) {
+        super(name, health, mana, baseAttackRange);
+        this.baseAttackDamage = baseAttackDamage;
     }
-
-
 
     public void performAction(PlayerAction action, GameChar target){
         switch (action.getType()){
@@ -46,14 +32,10 @@ public class Player extends GameChar {
                 throw new NotImplementedException();
         }
     }
-    @Override
-    public void castSpell(Spell spell, Fightable target) {
-        Damage damage = new Damage(spell.getDamageType(), spell.getBaseDamage());
-        DamageProcessor.damage(this, target, damage, AttackRange.SPELL);
-    }
+
 
     @Override
-    public void attack(Fightable target) {
+    public void attack(GameChar target) {
 
     }
 

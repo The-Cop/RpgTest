@@ -17,6 +17,12 @@ public class Damage {
         this.damageType = damageType;
     }
 
+    public Damage(Damage other) {
+        this.amount = other.amount;
+        this.damageType = other.damageType;
+    }
+
+
     public int getAmount() {
         return amount;
     }

@@ -7,11 +7,14 @@ import com.thecop.rpgtest.mech.effect.Effect;
  */
 public abstract class LastingEffect extends Effect {
     protected int length;
+    protected String description;
 
 
-    public LastingEffect(String name, int length) {
+
+    public LastingEffect(String name, int length, String description) {
         super(name);
         this.length = length;
+        this.description = description;
     }
 
     public String getName() {
@@ -31,5 +34,9 @@ public abstract class LastingEffect extends Effect {
 
     public boolean ended(){
         return length==0;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
