@@ -38,7 +38,11 @@ public class FightProcessor {
         while(playerChar.isAlive() && monster.isAlive()){
             processLastingEffects();
             turn();
-            deleteEndedEffects();
+            tickAndDeleteEndedEffects();
+            //TODO first tick of newly applied effect goes nowhere because it is not processed but length is reduced
+            //TODO maybe set boolean "added this turn" - and if so, no tick for it
+
+            print("=======END OF TURN=======");
         }
         if(playerChar.isAlive()){
             print("Winner is " + playerChar.getName());
@@ -64,7 +68,7 @@ public class FightProcessor {
             monster.attack(playerChar);
             isPlayerTurn=true;
         }
-        print("=======END OF TURN=======");
+
     }
 
     private void processLastingEffects(){
@@ -73,21 +77,21 @@ public class FightProcessor {
                 GameCharEffect gce = (GameCharEffect)lastingEffect;
                 gce.apply(playerChar);
             }
-            lastingEffect.tick();
+
         }
         for (LastingEffect lastingEffect : monster.getLastingEffects()) {
             if(lastingEffect instanceof GameCharEffect){
                 GameCharEffect gce = (GameCharEffect)lastingEffect;
                 gce.apply(monster);
             }
-            lastingEffect.tick();
         }
     }
 
-    private void deleteEndedEffects(){
+    private void tickAndDeleteEndedEffects(){
         Iterator<LastingEffect> i = playerChar.getLastingEffects().iterator();
         while (i.hasNext()) {
             LastingEffect le = playerChar.getLastingEffects().iterator().next();
+            le.tick();
             if(le.ended()){
                 i.remove();
                 print("Effect " + le.getName() + " has ended");
@@ -97,6 +101,7 @@ public class FightProcessor {
         i = monster.getLastingEffects().iterator();
         while (i.hasNext()) {
             LastingEffect le = i.next();
+            le.tick();
             if(le.ended()){
                 print("Effect " + le.getName() + " has ended");
                 i.remove();

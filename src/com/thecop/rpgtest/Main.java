@@ -12,12 +12,36 @@ import com.thecop.rpgtest.mech.spell.SpellTargetType;
 import com.thecop.rpgtest.object.GameChar;
 import com.thecop.rpgtest.object.Monster;
 import com.thecop.rpgtest.object.PlayerChar;
+import dnl.utils.text.table.TextTable;
 
 public class Main {
 
     public static void main(String[] args) {
-        playerFightTest();
 
+//        playerFightTest();
+        String[] columnNames = {
+                "First Name",
+                "Last Name",
+                "Sport",
+                "# of Years",
+                "Vegetarian"};
+
+
+        Object[][] data = {
+                {"Kathy", null,
+                        "Snowboarding Snowboarding Snowboarding Snowboarding Snowboarding Snowboarding Snowboarding Snowboarding Snowboarding Snowboarding Snowboarding ", new Integer(5), new Boolean(false)},
+                {"John", "Doe",
+                        "Rowing", new Integer(3), new Boolean(true)},
+                {"Sue", "Black",
+                        "Knitting", new Integer(2), new Boolean(false)},
+                {"Jane", "White",
+                        "Speed reading", new Integer(20), new Boolean(true)},
+                {"Joe", "Brown",
+                        "Pool", new Integer(10), new Boolean(false)}
+        };
+        TextTable tt = new TextTable(columnNames, data);
+        tt.printTable();
+        tt.printTable();
     }
 
     private static PlayerChar getPlayer(){

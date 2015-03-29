@@ -60,8 +60,16 @@
 		</profile>
 	</profiles>
 	<dependencies>
-
+		<dependency>
+			<groupId>dnl.utils</groupId>
+			<artifactId>j-text-utils</artifactId>
+			<version>0.3.3</version>
+		</dependency>
 	</dependencies>
 	<repositories>
+		<repository>
+			<id>d-maven</id>
+			<url>http://d-maven.googlecode.com/svn/trunk/repo</url>
+		</repository>
 	</repositories>
 </project>

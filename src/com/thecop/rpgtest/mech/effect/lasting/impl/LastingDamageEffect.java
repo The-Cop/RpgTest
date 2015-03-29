@@ -18,6 +18,12 @@ public class LastingDamageEffect extends LastingEffect<LastingDamageEffect> impl
         this.damage = new Damage(damage,damageType);
     }
 
+    private LastingDamageEffect(LastingDamageEffect other) {
+        super(other);
+        this.damage = other.damage;
+    }
+
+
     @Override
     public void apply(GameChar c) {
         DamageProcessor.effectDamage(c,damage,name);
@@ -25,5 +31,10 @@ public class LastingDamageEffect extends LastingEffect<LastingDamageEffect> impl
 
     public Damage getDamage() {
         return damage;
+    }
+
+    @Override
+    public LastingDamageEffect getCopy() {
+        return new LastingDamageEffect(this);
     }
 }
