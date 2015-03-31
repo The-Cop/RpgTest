@@ -3,12 +3,12 @@ package com.thecop.rpgtest.mech.screen;
 /**
  * Created by TheCop on 26.03.2015.
  */
-public enum Command {
+public enum FightCommand {
     ATTACK("a"),SPELL("s"),RUN("r"),BACK("q");
 
     private String inputString;
 
-    Command(String inputString) {
+    FightCommand(String inputString) {
         this.inputString = inputString;
     }
 
@@ -16,9 +16,9 @@ public enum Command {
         return inputString;
     }
 
-    public static Command getCommand(String input){
+    public static FightCommand getCommand(String input){
         if(input==null)return null;
-        for (Command command : Command.values()) {
+        for (FightCommand command : FightCommand.values()) {
             if(input.equalsIgnoreCase(command.getInputString())){
                 return command;
             }

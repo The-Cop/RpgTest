@@ -27,7 +27,7 @@ public class FightScreenController {
             print("a - Attack");
             print("s - Use a spell");
             print("r - Run like hell");
-            switch (Command.getCommand(Util.input())){
+            switch (FightCommand.getCommand(Util.input())){
                 case ATTACK:
                     return new PlayerAction(PlayerActionType.USUAL_ATTACK,null);
                 case SPELL:
@@ -49,7 +49,7 @@ public class FightScreenController {
             printSpellList(spells);
             print("q - back");
             String input = Util.input();
-            if(Command.getCommand(input)==Command.BACK){
+            if(FightCommand.getCommand(input)== FightCommand.BACK){
                 return null;
             }
             for (Spell spell : spells) {
