@@ -5,7 +5,7 @@ import com.thecop.rpgtest.mech.effect.Effect;
 /**
  * Created by Admin on 31.03.2015.
  */
-public abstract class ItemEffect extends Effect {
+public abstract class ItemEffect<T> extends Effect<T> {
     protected String description;
 
     public ItemEffect(String name, String description) {

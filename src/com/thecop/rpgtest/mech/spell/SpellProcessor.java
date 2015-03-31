@@ -1,10 +1,8 @@
-package com.thecop.rpgtest.mech.fight;
+package com.thecop.rpgtest.mech.spell;
 
 import com.thecop.rpgtest.mech.effect.Effect;
 import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
-import com.thecop.rpgtest.mech.spell.Spell;
-import com.thecop.rpgtest.mech.spell.SpellTargetType;
 import com.thecop.rpgtest.object.GameChar;
 
 import static com.thecop.rpgtest.Logger.print;

@@ -6,6 +6,7 @@ import com.thecop.rpgtest.mech.effect.SpellModifier;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 import com.thecop.rpgtest.mech.fight.*;
 import com.thecop.rpgtest.mech.spell.Spell;
+import com.thecop.rpgtest.mech.spell.SpellProcessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,7 +132,7 @@ public abstract class GameChar {
     public void castSpell(Spell spell, GameChar target){
         spell=getModifiedSpell(spell);
         mana=mana-spell.getManaCost();
-        SpellProcessor.applySpell(spell,this,target);
+        SpellProcessor.applySpell(spell, this, target);
     }
 
     public boolean canAttack() {
