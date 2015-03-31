@@ -10,11 +10,10 @@ public abstract class LastingEffect<T> extends Effect<T> {
     protected String description;
 
 
-
     public LastingEffect(String name, int length, String description) {
         super(name);
         //fix: length +1 to compensate ticking of the turn the effect was cast
-        this.length = length+1;
+        this.length = length + 1;
         this.description = description;
     }
 
@@ -24,24 +23,19 @@ public abstract class LastingEffect<T> extends Effect<T> {
         this.description = other.description;
     }
 
-
-    public String getName() {
-        return name;
-    }
-
     public int getLength() {
         return length;
     }
 
-    public void tick(){
-        if(length==-1){
+    public void tick() {
+        if (length == -1) {
             return;
         }
-        length=length-1;
+        length = length - 1;
     }
 
-    public boolean ended(){
-        return length==0;
+    public boolean ended() {
+        return length == 0;
     }
 
     public String getDescription() {
