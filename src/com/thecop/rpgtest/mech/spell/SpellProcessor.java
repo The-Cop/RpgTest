@@ -24,7 +24,7 @@ public class SpellProcessor {
         Effect effect = spell.getEffect();
         if(effect instanceof LastingEffect){
             spellTarget.addEffect((LastingEffect)effect);
-            print(target.getName() + " is now affected by " + effect.getName());
+            print(spellTarget.getName() + " is now affected by " + effect.getName());
         }
         else if(effect instanceof InstantEffect){
             InstantEffect ie = (InstantEffect)effect;

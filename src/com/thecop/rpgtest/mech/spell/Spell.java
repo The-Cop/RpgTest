@@ -61,4 +61,16 @@ public class Spell {
     public void setModified(boolean isModified) {
         this.isModified = isModified;
     }
+
+    @Override
+    public String toString() {
+        return "Spell{" +
+                "name='" + name + '\'' +
+                ", controlString='" + controlString + '\'' +
+                ", manaCost=" + manaCost +
+                ", targetType=" + targetType +
+                ", effect=" + effect +
+                ", isModified=" + isModified +
+                '}';
+    }
 }

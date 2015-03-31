@@ -89,10 +89,14 @@ public class FightProcessor {
 
     private void tickAndDeleteEndedEffects(){
         Iterator<LastingEffect> i = playerChar.getLastingEffects().iterator();
+        print("Processing effects");
+
         while (i.hasNext()) {
-            LastingEffect le = playerChar.getLastingEffects().iterator().next();
+            LastingEffect le = i.next();
+            print("Processing effect " +le.getName());
             le.tick();
             if(le.ended()){
+                print(le.getName()+" has ended, deleting");
                 i.remove();
                 print("Effect " + le.getName() + " has ended");
             }

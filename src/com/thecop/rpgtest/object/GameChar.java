@@ -63,6 +63,11 @@ public abstract class GameChar {
     }
 
     public void addSpell(Spell s) {
+        for (Spell spell : spells) {
+            if(spell.getControlString().equalsIgnoreCase(s.getControlString())){
+                throw new IllegalArgumentException("Control strings must be unique!");
+            }
+        }
         spells.add(s);
     }
 

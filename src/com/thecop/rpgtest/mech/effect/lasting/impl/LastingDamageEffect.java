@@ -26,11 +26,11 @@ public class LastingDamageEffect extends LastingEffect<LastingDamageEffect> impl
 
     @Override
     public void apply(GameChar c) {
-        DamageProcessor.effectDamage(c,damage,name);
+        DamageProcessor.effectDamage(c,getDamage(),name);
     }
 
     public Damage getDamage() {
-        return damage;
+        return new Damage(damage);
     }
 
     @Override

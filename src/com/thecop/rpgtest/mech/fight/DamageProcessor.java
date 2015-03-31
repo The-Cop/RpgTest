@@ -1,6 +1,8 @@
 package com.thecop.rpgtest.mech.fight;
 
 import com.thecop.rpgtest.Logger;
+import com.thecop.rpgtest.mech.effect.IncomingDamageEffect;
+import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 import com.thecop.rpgtest.object.GameChar;
 import com.thecop.rpgtest.utils.Util;
 
@@ -12,7 +14,7 @@ import static com.thecop.rpgtest.Logger.print;
 public class DamageProcessor {
     public static void attackDamage(GameChar attacker, GameChar target, Damage damage, AttackRange attackRange) {
         print(attacker.getName() + " attacks " + target.getName() + " with damage " + damage.getAmount());
-        calculateAndDealDamage(target, damage.getAmount(), damage.damageType);
+        calculateAndDealDamage(target, damage);
         if(attackRange==AttackRange.MELEE) {
             //TODO implement attacktype - if spell or ranged then no counterattack can be done
         }
@@ -20,28 +22,38 @@ public class DamageProcessor {
 
     public static void effectDamage(GameChar c, Damage damage, String effectName){
         print(c.getName() + " is affected by " + effectName + " effect.");
-        calculateAndDealDamage(c,damage.getAmount(),damage.getDamageType());
+        calculateAndDealDamage(c,damage);
     }
 
-    private static void calculateAndDealDamage(GameChar target, int damage,DamageType dType){
-        int resultDamageAmount = damage;
+    private static void calculateAndDealDamage(GameChar target, Damage damage){
+        int resultDamageAmount = damage.getAmount();
         //process damage through resistances
-        Resistance resistance = target.getResistance(dType);
+        Resistance resistance = target.getResistance(damage.getDamageType());
         //check if attack type is of spell kind
-        if(dType.isMagic()){
+        if(damage.getDamageType().isMagic()){
             Resistance magicResistance = target.getResistance(DamageType.MAGIC);
             if (resistance != null) {
                 resultDamageAmount = calculateResistantDamage(resultDamageAmount, magicResistance);
             }
         }
-        //
+        //other resistances
         if (resistance != null) {
             resultDamageAmount = calculateResistantDamage(resultDamageAmount, resistance);
         }
 
+        damage.setAmount(resultDamageAmount);
+
+        //lasting effects
+        for (LastingEffect lastingEffect : target.getLastingEffects()) {
+            if(lastingEffect instanceof IncomingDamageEffect){
+                IncomingDamageEffect idf = (IncomingDamageEffect)lastingEffect;
+                damage = idf.modifyIncomingDamage(damage);
+            }
+        }
+
         //deal damage
-        target.takeDamage(resultDamageAmount);
-        print(target.getName() + " takes damage " + resultDamageAmount + " and has " + target.getHealthString() + " hp");
+        target.takeDamage(damage.getAmount());
+        print(target.getName() + " takes damage " + damage.getAmount() + " and has " + target.getHealthString() + " hp");
     }
 
 

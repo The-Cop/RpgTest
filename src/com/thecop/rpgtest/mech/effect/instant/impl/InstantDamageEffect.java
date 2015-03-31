@@ -26,7 +26,7 @@ public class InstantDamageEffect extends InstantEffect<InstantDamageEffect> impl
 
     @Override
     public void apply(GameChar c) {
-        DamageProcessor.effectDamage(c,damage,name);
+        DamageProcessor.effectDamage(c,getDamage(),name);
     }
 
 

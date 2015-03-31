@@ -34,4 +34,8 @@ public class Damage {
     public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
     }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }
