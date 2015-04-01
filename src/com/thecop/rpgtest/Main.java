@@ -2,6 +2,7 @@ package com.thecop.rpgtest;
 
 import com.thecop.rpgtest.mech.effect.instant.impl.InstantDamageEffect;
 import com.thecop.rpgtest.mech.effect.instant.impl.InstantHeal;
+import com.thecop.rpgtest.mech.effect.lasting.impl.AttackAmplifier;
 import com.thecop.rpgtest.mech.effect.lasting.impl.LastingAllDamageReduceEffect;
 import com.thecop.rpgtest.mech.effect.lasting.impl.LastingDamageEffect;
 import com.thecop.rpgtest.mech.fight.AttackRange;
@@ -51,6 +52,8 @@ public class Main {
         p.addSpell(new Spell("Burn","b",4, SpellTargetType.ENEMY,new LastingDamageEffect("Burning",3,20,DamageType.FIRE,"Slowly burns your body")));
         p.addSpell(new Spell("Instant heal","i",10, SpellTargetType.FRIENDLY,new InstantHeal("Instant healing",10)));
         p.addSpell(new Spell("Shield spell","s",10, SpellTargetType.FRIENDLY,new LastingAllDamageReduceEffect("Shield",10,"Reduces all incoming damage by 5",5)));
+        p.addSpell(new Spell("Critical strike","c",15, SpellTargetType.FRIENDLY,new AttackAmplifier("Critical Strike",2,"Grants x2.5 attack damage next turn",2.5)));
+
 
         p.addResistance(new Resistance(DamageType.PHYSICAL,3));
 //        p.addResistance(new Resistance(DamageType.FIRE,2));
