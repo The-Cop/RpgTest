@@ -24,9 +24,7 @@ public class FightScreenController {
     public PlayerAction choosePlayerAction() {
         while (true) {
             print("What to do?");
-            print("a - Attack");
-            print("s - Use a spell");
-            print("r - Run like hell");
+            printFightCommands();
             switch (FightCommand.getCommand(Util.input())){
                 case ATTACK:
                     return new PlayerAction(PlayerActionType.USUAL_ATTACK,null);
@@ -46,6 +44,7 @@ public class FightScreenController {
     private PlayerAction chooseSpell(){
         List<Spell> spells = playerChar.getSpells();
         while (true) {
+            print("Mana: " + playerChar.getManaString());
             printSpellList(spells);
             print("q - back");
             String input = Util.input();
@@ -73,8 +72,14 @@ public class FightScreenController {
                 print(spell.getControlString() + " - " + spell.getName());
             }
             else {
-                print(spell.getControlString() + " - " + spell.getName() + " - not enough mana");
+                print(spell.getControlString() + " - " + spell.getName() + " - can not cast spell");
             }
+        }
+    }
+
+    private void printFightCommands(){
+        for (FightCommand fightCommand : FightCommand.values()) {
+            print(fightCommand.getInputString()+" - "+fightCommand.getDescription());
         }
     }
 

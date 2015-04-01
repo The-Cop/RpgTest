@@ -51,7 +51,7 @@ public class Spell {
      * @return effect copy
      */
     public Effect getEffect() {
-        return effect;
+        return (Effect)effect.getCopy();
     }
 
     public boolean isModified() {
