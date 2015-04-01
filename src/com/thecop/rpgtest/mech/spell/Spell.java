@@ -26,7 +26,7 @@ public class Spell {
         this.controlString = other.controlString;
         this.manaCost = other.manaCost;
         this.targetType = other.targetType;
-        this.effect = other.getEffect();
+        this.effect = (Effect)other.getEffect().getCopy();
     }
 
 
@@ -51,7 +51,7 @@ public class Spell {
      * @return effect copy
      */
     public Effect getEffect() {
-        return (Effect)effect.getCopy();
+        return effect;
     }
 
     public boolean isModified() {
