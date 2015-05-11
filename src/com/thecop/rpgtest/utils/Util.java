@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by TheCop on 21.03.2015.
@@ -27,11 +29,29 @@ public class Util {
     public static String input() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-           return br.readLine().toLowerCase();
+            return br.readLine().toLowerCase();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
         }
         return null;
     }
+
+    public static String listToString(List list) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        if (list == null) {
+            return sb.toString();
+        }
+        Iterator i = list.iterator();
+        while(i.hasNext()){
+            sb.append(i.next().toString());
+            if(i.hasNext()){
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
 }

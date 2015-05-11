@@ -18,4 +18,11 @@ public abstract class InstantEffect<T> extends Effect<T>{
 
 
     public abstract void applyInstantEffect(GameChar c);
+
+    @Override
+    public String toString() {
+        return "InstantEffect{" +
+                "name=" + name +
+                "}";
+    }
 }

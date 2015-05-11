@@ -1,24 +1,42 @@
 package com.thecop.rpgtest.mech.spell;
 
+import com.thecop.rpgtest.mech.Copyable;
 import com.thecop.rpgtest.mech.effect.Effect;
+import com.thecop.rpgtest.utils.CopyUtils;
+import com.thecop.rpgtest.utils.Util;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by TheCop on 21.03.2015.
  */
-public class Spell {
+public class Spell implements Copyable<Spell>{
     private String name;
     private String controlString;
     private int manaCost;
     private SpellTargetType targetType;
-    private Effect effect;
+    private List<Effect> effects = new ArrayList<>();
     private boolean isModified=false;
 
-    public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, Effect effect) {
+    public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, List<Effect> effects) {
         this.name = name;
         this.controlString = controlString;
         this.manaCost = manaCost;
         this.targetType = targetType;
-        this.effect = effect;
+        if(effects!=null){
+            this.effects.addAll(effects);
+        }
+    }
+    public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, Effect effect) {
+        this(name,controlString,manaCost,targetType, Collections.EMPTY_LIST);
+        this.effects.add(effect);
+    }
+    public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, Effect[] effects) {
+        this(name,controlString,manaCost,targetType, Collections.EMPTY_LIST);
+        this.effects.addAll(Arrays.asList(effects));
     }
 
     public Spell(Spell other) {
@@ -26,7 +44,7 @@ public class Spell {
         this.controlString = other.controlString;
         this.manaCost = other.manaCost;
         this.targetType = other.targetType;
-        this.effect = (Effect)other.getEffect().getCopy();
+        this.effects = CopyUtils.getCopy(other.effects);
     }
 
 
@@ -50,8 +68,8 @@ public class Spell {
      *
      * @return effect copy
      */
-    public Effect getEffect() {
-        return effect;
+    public List<Effect> getEffects() {
+        return effects;
     }
 
     public boolean isModified() {
@@ -69,8 +87,13 @@ public class Spell {
                 ", controlString='" + controlString + '\'' +
                 ", manaCost=" + manaCost +
                 ", targetType=" + targetType +
-                ", effect=" + effect +
+                ", effects=" + Util.listToString(effects) +
                 ", isModified=" + isModified +
                 '}';
+    }
+
+    @Override
+    public Spell getCopy() {
+        return new Spell(this);
     }
 }

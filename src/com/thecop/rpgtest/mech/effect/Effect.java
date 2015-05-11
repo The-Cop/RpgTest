@@ -1,10 +1,12 @@
 package com.thecop.rpgtest.mech.effect;
 
 
+import com.thecop.rpgtest.mech.Copyable;
+
 /**
  * Created by TheCop on 24.03.2015.
  */
-public abstract class Effect<T> {
+public abstract class Effect<T> implements Copyable<T> {
     protected String name;
 
     public Effect(String name) {
@@ -16,10 +18,14 @@ public abstract class Effect<T> {
     }
 
 
-    public String getName() {
+    public  String getName() {
         return name;
     }
 
-    public abstract T getCopy();
-
+    @Override
+    public String toString() {
+        return "Effect{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

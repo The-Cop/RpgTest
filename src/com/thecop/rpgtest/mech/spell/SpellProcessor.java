@@ -5,6 +5,7 @@ import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 import com.thecop.rpgtest.object.GameChar;
 
+import static com.thecop.rpgtest.Logger.dlog;
 import static com.thecop.rpgtest.Logger.print;
 
 /**
@@ -12,7 +13,6 @@ import static com.thecop.rpgtest.Logger.print;
  */
 public class SpellProcessor {
     public static void applySpell(Spell spell, GameChar caster, GameChar target){
-
         //TODO implement AOE spelling
         GameChar spellTarget;
         if(spell.getTargetType()== SpellTargetType.FRIENDLY){
@@ -21,14 +21,17 @@ public class SpellProcessor {
         else{
             spellTarget=target;
         }
-        Effect effect = spell.getEffect();
-        if(effect instanceof LastingEffect){
-            spellTarget.addEffect((LastingEffect)effect);
-            print(spellTarget.getName() + " is now affected by " + effect.getName());
-        }
-        else if(effect instanceof InstantEffect){
-            InstantEffect ie = (InstantEffect)effect;
-            ie.applyInstantEffect(spellTarget);
+        dlog("Processing spell " + spell.toString());
+        for (Effect effect : spell.getEffects()) {
+            if(effect instanceof LastingEffect){
+                spellTarget.addEffect((LastingEffect)effect);
+                print(spellTarget.getName() + " is now affected by " + effect.getName());
+            }
+            else if(effect instanceof InstantEffect){
+                InstantEffect ie = (InstantEffect)effect;
+                dlog("Applying instant effect "+ie.getName()+" to "+spellTarget.getName());
+                ie.applyInstantEffect(spellTarget);
+            }
         }
     }
 }

@@ -27,9 +27,9 @@ public abstract class GameChar {
 
     protected AttackRange baseAttackRange;
 
-    protected Map<DamageType, Resistance> resistances;
-    protected List<LastingEffect> lastingEffects;
-    protected List<Spell> spells;
+    protected Map<DamageType, Resistance> resistances= new HashMap<>();;
+    protected List<LastingEffect> lastingEffects= new ArrayList<>();;
+    protected List<Spell> spells= new ArrayList<>();;
 
 
     public GameChar(String name, int health, int maxHealth, int mana, int maxMana, AttackRange baseAttackRange) {
@@ -39,24 +39,13 @@ public abstract class GameChar {
         this.mana = mana;
         this.maxMana = maxMana;
         this.baseAttackRange = baseAttackRange;
-        init();
     }
 
     public GameChar(String name, int health,  int mana, AttackRange baseAttackRange) {
-        this.name = name;
-        this.health = health;
-        this.maxHealth = health;
-        this.mana = mana;
-        this.maxMana = mana;
-        this.baseAttackRange = baseAttackRange;
-        init();
+        this(name,health,health,mana,mana,baseAttackRange);
     }
 
-    private void init() {
-        resistances = new HashMap<>();
-        lastingEffects = new ArrayList<>();
-        spells = new ArrayList<>();
-    }
+
 
     public void addEffect(LastingEffect e) {
         lastingEffects.add(e);
@@ -146,9 +135,9 @@ public abstract class GameChar {
 
     public Spell getModifiedSpell(Spell spell) {
         //if already modified - return
-        if(spell.isModified()){
-            return spell;
-        }
+//        if(spell.isModified()){
+//            return spell;
+//        }
         Spell spellCopy = new Spell(spell);
         for (Effect effect : lastingEffects) {
             if (effect instanceof SpellModifier) {
