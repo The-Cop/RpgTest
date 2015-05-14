@@ -133,11 +133,7 @@ public abstract class GameChar {
         return getAttack()!=null;
     }
 
-    public Spell getModifiedSpell(Spell spell) {
-        //if already modified - return
-//        if(spell.isModified()){
-//            return spell;
-//        }
+    private Spell getModifiedSpell(Spell spell) {
         Spell spellCopy = new Spell(spell);
         for (Effect effect : lastingEffects) {
             if (effect instanceof SpellModifier) {
@@ -148,7 +144,6 @@ public abstract class GameChar {
                 }
             }
         }
-        spellCopy.setModified(true);
         return spellCopy;
     }
 

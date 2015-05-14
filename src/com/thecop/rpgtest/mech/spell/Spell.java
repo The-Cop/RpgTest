@@ -19,7 +19,6 @@ public class Spell implements Copyable<Spell>{
     private int manaCost;
     private SpellTargetType targetType;
     private List<Effect> effects = new ArrayList<>();
-    private boolean isModified=false;
 
     public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, List<Effect> effects) {
         this.name = name;
@@ -72,13 +71,6 @@ public class Spell implements Copyable<Spell>{
         return effects;
     }
 
-    public boolean isModified() {
-        return isModified;
-    }
-
-    public void setModified(boolean isModified) {
-        this.isModified = isModified;
-    }
 
     @Override
     public String toString() {
@@ -88,7 +80,6 @@ public class Spell implements Copyable<Spell>{
                 ", manaCost=" + manaCost +
                 ", targetType=" + targetType +
                 ", effects=" + Util.listToString(effects) +
-                ", isModified=" + isModified +
                 '}';
     }
 
