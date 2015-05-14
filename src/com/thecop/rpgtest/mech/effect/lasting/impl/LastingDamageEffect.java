@@ -3,7 +3,6 @@ package com.thecop.rpgtest.mech.effect.lasting.impl;
 import com.thecop.rpgtest.mech.effect.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 import com.thecop.rpgtest.mech.fight.Damage;
-import com.thecop.rpgtest.mech.fight.DamageProcessor;
 import com.thecop.rpgtest.mech.fight.DamageType;
 import com.thecop.rpgtest.object.GameChar;
 
@@ -26,7 +25,7 @@ public class LastingDamageEffect extends LastingEffect<LastingDamageEffect> impl
 
     @Override
     public void apply(GameChar c) {
-        DamageProcessor.effectDamage(c,getDamage(),name);
+        c.takeEffectDamage(getDamage(),name);
     }
 
     public Damage getDamage() {

@@ -2,7 +2,6 @@ package com.thecop.rpgtest.object;
 
 import com.thecop.rpgtest.mech.fight.AttackRange;
 import com.thecop.rpgtest.mech.fight.Damage;
-import com.thecop.rpgtest.mech.fight.DamageProcessor;
 import com.thecop.rpgtest.mech.fight.DamageType;
 import com.thecop.rpgtest.mech.player.PlayerAction;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -22,7 +21,7 @@ public class PlayerChar extends GameChar {
     public void performAction(PlayerAction action, GameChar target){
         switch (action.getType()){
             case USUAL_ATTACK:
-                DamageProcessor.attackDamage(this, target, getAttack(), AttackRange.MELEE);
+                attack(target);
                 return;
             case SPELL:
                 castSpell(action.getSpell(),target);
@@ -34,10 +33,6 @@ public class PlayerChar extends GameChar {
     }
 
 
-    @Override
-    public void attack(GameChar target) {
-
-    }
 
     @Override
     protected Damage getBaseUnmodifiedAttack() {

@@ -38,4 +38,12 @@ public class Damage {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "Damage{" +
+                "amount=" + amount +
+                ", damageType=" + damageType +
+                '}';
+    }
 }

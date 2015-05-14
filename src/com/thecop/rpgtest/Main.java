@@ -76,7 +76,6 @@ public class Main {
         p.addResistance(new Resistance(DamageType.PHYSICAL,0));
         p.addResistance(new Resistance(DamageType.FIRE,3));
         p.addResistance(new Resistance(DamageType.ICE,0));
-        p.addResistance(new Resistance(DamageType.MAGIC,2));
 
         return p;
     }

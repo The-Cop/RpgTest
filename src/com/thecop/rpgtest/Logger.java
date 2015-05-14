@@ -8,7 +8,7 @@ public class Logger {
 
     public static void dlog(Object o) {
         if (debug) {
-            print(o);
+            print("Debug: "+o.toString());
         }
     }
 

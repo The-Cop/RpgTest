@@ -3,7 +3,6 @@ package com.thecop.rpgtest.mech.effect.instant.impl;
 import com.thecop.rpgtest.mech.effect.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
 import com.thecop.rpgtest.mech.fight.Damage;
-import com.thecop.rpgtest.mech.fight.DamageProcessor;
 import com.thecop.rpgtest.mech.fight.DamageType;
 import com.thecop.rpgtest.object.GameChar;
 
@@ -26,7 +25,7 @@ public class InstantDamageEffect extends InstantEffect<InstantDamageEffect> impl
 
     @Override
     public void apply(GameChar c) {
-        DamageProcessor.effectDamage(c,getDamage(),name);
+        c.takeEffectDamage(getDamage(),name);
     }
 
 
