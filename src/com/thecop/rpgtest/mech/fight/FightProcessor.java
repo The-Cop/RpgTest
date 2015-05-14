@@ -10,6 +10,7 @@ import com.thecop.rpgtest.utils.Display;
 
 import java.util.Iterator;
 
+import static com.thecop.rpgtest.Logger.dlog;
 import static com.thecop.rpgtest.Logger.print;
 
 /**
@@ -36,9 +37,11 @@ public class FightProcessor {
         print("Fight: " + playerChar.getName() + " vs " + monster.getName());
 
         while(playerChar.isAlive() && monster.isAlive()){
-            processLastingEffects();
+            applyLastingEffects();
             turn();
+            //TODO try to apply effects at the end of turn, not in the beginning
             tickAndDeleteEndedEffects();
+
             //TODO first tick of newly applied effect goes nowhere because it is not processed but length is reduced
             //TODO maybe set boolean "added this turn" - and if so, no tick for it
 
@@ -71,7 +74,7 @@ public class FightProcessor {
 
     }
 
-    private void processLastingEffects(){
+    private void applyLastingEffects(){
         for (LastingEffect lastingEffect : playerChar.getLastingEffects()) {
             if(lastingEffect instanceof GameCharEffect){
                 GameCharEffect gce = (GameCharEffect)lastingEffect;
@@ -89,16 +92,15 @@ public class FightProcessor {
 
     private void tickAndDeleteEndedEffects(){
         Iterator<LastingEffect> i = playerChar.getLastingEffects().iterator();
-        print("Processing effects");
+        dlog("Processing effects");
 
         while (i.hasNext()) {
             LastingEffect le = i.next();
-            print("Processing effect " +le.getName());
+            dlog("Processing effect " + le.getName());
             le.tick();
             if(le.ended()){
-                print(le.getName()+" has ended, deleting");
                 i.remove();
-                print("Effect " + le.getName() + " has ended");
+                dlog("Effect " + le.getName() + " has ended");
             }
         }
 

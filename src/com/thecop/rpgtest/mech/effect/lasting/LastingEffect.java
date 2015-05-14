@@ -12,7 +12,7 @@ public abstract class LastingEffect<T> extends Effect<T> {
 
     public LastingEffect(String name, int length, String description) {
         super(name);
-        //fix: length +1 to compensate ticking of the turn the effect was cast
+        //TODO FIX THIS SHIT: length +1 to compensate ticking of the turn the effect was cast
         this.length = length + 1;
         this.description = description;
     }
