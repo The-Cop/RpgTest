@@ -37,10 +37,9 @@ public class FightProcessor {
         print("Fight: " + playerChar.getName() + " vs " + monster.getName());
 
         while(playerChar.isAlive() && monster.isAlive()){
-            applyLastingEffects();
             turn();
-            //TODO try to apply effects at the end of turn, not in the beginning
             tickAndDeleteEndedEffects();
+            applyLastingEffects();
 
             //TODO first tick of newly applied effect goes nowhere because it is not processed but length is reduced
             //TODO maybe set boolean "added this turn" - and if so, no tick for it
@@ -63,7 +62,7 @@ public class FightProcessor {
         Display.separator();
         if(isPlayerTurn){
             PlayerAction action = fsc.choosePlayerAction();
-            print("Action = " + action);
+            dlog("Action = " + action);
             playerChar.performAction(action, monster);
             isPlayerTurn=false;
         }
