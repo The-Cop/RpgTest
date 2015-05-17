@@ -46,7 +46,6 @@ public abstract class GameChar {
     //Backpack may be common for playable party
 
 
-
     public GameChar(String name, int health, int maxHealth, int mana, int maxMana, AttackRange baseAttackRange) {
         this.name = name;
         this.health = health;
@@ -83,8 +82,7 @@ public abstract class GameChar {
         if (canAttack()) {
             print(getName() + " attacks " + target.getName() + " with " + getAttack().toString());
             target.takeDamage(getAttack(), baseAttackRange);
-        }
-        else {
+        } else {
             print(getName() + " can not attack!");
         }
     }
@@ -135,40 +133,40 @@ public abstract class GameChar {
 
     public void castSpell(Spell spell, GameChar target, Party partyTarget) {
         spell = getModifiedSpell(spell);
-        dlog("Casting spell " + spell.toString() + " on " +(target!=null ? target.getName() : partyTarget.getNames()));
+        dlog("Casting spell " + spell.toString() + " on " + (target != null ? target.getName() : partyTarget.getNames()));
         mana = mana - spell.getManaCost();
         //AOE spell
-        if(spell.isAOE()){
-            if(partyTarget==null){
+        if (spell.isAOE()) {
+            if (partyTarget == null) {
                 throw new IllegalArgumentException("aoeTarget can not be null for AOE spells");
             }
-            applyAOESpell(spell,partyTarget);
+            applyAOESpell(spell, partyTarget);
             return;
         }
         //single target spell
-        if(!spell.isAOE()){
+        if (!spell.isAOE()) {
             //self only
-            if(spell.getTargetType()== SpellTargetType.SELF){
-                applySingleTargetSpell(spell,this);
+            if (spell.getTargetType() == SpellTargetType.SELF) {
+                applySingleTargetSpell(spell, this);
             }
             //any target
             else {
-                if(target==null){
+                if (target == null) {
                     throw new IllegalArgumentException("target can not be null for single-target spells");
                 }
-                applySingleTargetSpell(spell,target);
+                applySingleTargetSpell(spell, target);
             }
         }
     }
 
-    private void applyAOESpell(Spell spell, Party target){
+    private void applyAOESpell(Spell spell, Party target) {
         for (Object gameCharObj : target.getChars()) {
             GameChar gc = (GameChar) gameCharObj;
-            applySingleTargetSpell(spell,gc);
+            applySingleTargetSpell(spell, gc);
         }
     }
 
-    private void applySingleTargetSpell(Spell spell, GameChar target){
+    private void applySingleTargetSpell(Spell spell, GameChar target) {
         for (Effect effect : spell.getEffects()) {
             if (effect instanceof LastingEffect) {
                 target.addEffect((LastingEffect) effect);

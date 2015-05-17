@@ -16,6 +16,7 @@ public class Item {
         this.name = name;
         this.effects.addAll(effects);
     }
+
     public Item(String name, Effect effect) {
         this.name = name;
         this.effects.add(effect);

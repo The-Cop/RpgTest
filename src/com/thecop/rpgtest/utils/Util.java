@@ -44,9 +44,9 @@ public class Util {
             return sb.toString();
         }
         Iterator i = list.iterator();
-        while(i.hasNext()){
+        while (i.hasNext()) {
             sb.append(i.next().toString());
-            if(i.hasNext()){
+            if (i.hasNext()) {
                 sb.append(",");
             }
         }

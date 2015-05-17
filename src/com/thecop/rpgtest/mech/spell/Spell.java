@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by TheCop on 21.03.2015.
  */
-public class Spell implements Copyable<Spell>{
+public class Spell implements Copyable<Spell> {
     private String name;
     private String controlString;
     private int manaCost;
@@ -25,16 +25,18 @@ public class Spell implements Copyable<Spell>{
         this.controlString = controlString;
         this.manaCost = manaCost;
         this.targetType = targetType;
-        if(effects!=null){
+        if (effects != null) {
             this.effects.addAll(effects);
         }
     }
+
     public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, Effect effect) {
-        this(name,controlString,manaCost,targetType, Collections.EMPTY_LIST);
+        this(name, controlString, manaCost, targetType, Collections.EMPTY_LIST);
         this.effects.add(effect);
     }
+
     public Spell(String name, String controlString, int manaCost, SpellTargetType targetType, Effect[] effects) {
-        this(name,controlString,manaCost,targetType, Collections.EMPTY_LIST);
+        this(name, controlString, manaCost, targetType, Collections.EMPTY_LIST);
         this.effects.addAll(Arrays.asList(effects));
     }
 
@@ -46,7 +48,7 @@ public class Spell implements Copyable<Spell>{
         this.effects = CopyUtils.getCopy(other.effects);
     }
 
-    public boolean isAOE(){
+    public boolean isAOE() {
         return targetType.isAOE();
     }
 
@@ -68,7 +70,6 @@ public class Spell implements Copyable<Spell>{
     }
 
     /**
-     *
      * @return effect copy
      */
     public List<Effect> getEffects() {

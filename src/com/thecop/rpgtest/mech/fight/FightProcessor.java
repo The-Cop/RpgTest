@@ -28,17 +28,18 @@ public class FightProcessor {
         this.playerParty = playerParty;
         this.monsterParty = monsterParty;
         setFirstTurn();
-        fsc = new FightScreenController(monsterParty,playerParty);
+        fsc = new FightScreenController(monsterParty, playerParty);
     }
 
     /**
      * Start fighting
+     *
      * @return PlayerParty if the fight is won, null if lost
      */
-    public PlayerParty fight(){
+    public PlayerParty fight() {
         print("Fight: " + playerParty.getNames() + " vs " + monsterParty.getNames());
 
-        while(playerParty.isAlive() && monsterParty.isAlive()){
+        while (playerParty.isAlive() && monsterParty.isAlive()) {
             turn();
             tickAndDeleteEndedLastingEffects();
             applyLastingEffects();
@@ -48,7 +49,7 @@ public class FightProcessor {
 
             print("=======END OF TURN====================================================================================");
         }
-        if(playerParty.isAlive()){
+        if (playerParty.isAlive()) {
             return playerParty;
         }
         print("Heroes are slain");
@@ -57,30 +58,29 @@ public class FightProcessor {
 
     private void turn() {
 
-        if(isPlayersTurn){
+        if (isPlayersTurn) {
             //TODO implement choosing which player to attack (or implement speed-based turn order)
             for (PlayerChar playerChar : playerParty.getChars()) {
                 //TODO implement impossibility of choosing dead monster as a target; or delete dead monsterParty from party
                 PlayerAction action = null;
-                while (action==null) {
+                while (action == null) {
                     displayFightParticipants();
-                    action=fsc.choosePlayerAction(playerChar);
+                    action = fsc.choosePlayerAction(playerChar);
                 }
                 dlog("Action = " + action);
                 playerChar.performAction(action);
-                isPlayersTurn =false;
+                isPlayersTurn = false;
             }
-        }
-        else {
+        } else {
             //TODO implement monster's fight logic
             for (Monster monster : monsterParty.getChars()) {
                 monster.attack(playerParty.getRandomPlayer());
             }
-            isPlayersTurn =true;
+            isPlayersTurn = true;
         }
     }
 
-    private void displayFightParticipants(){
+    private void displayFightParticipants() {
         Display.separatorBig();
         print("Hero party:");
         Display.party(playerParty);
@@ -88,11 +88,11 @@ public class FightProcessor {
         Display.party(monsterParty);
     }
 
-    private void applyLastingEffects(){
+    private void applyLastingEffects() {
         for (PlayerChar playerChar : playerParty.getChars()) {
             for (LastingEffect lastingEffect : playerChar.getLastingEffects()) {
-                if(lastingEffect instanceof GameCharEffect){
-                    GameCharEffect gce = (GameCharEffect)lastingEffect;
+                if (lastingEffect instanceof GameCharEffect) {
+                    GameCharEffect gce = (GameCharEffect) lastingEffect;
                     gce.apply(playerChar);
                 }
             }
@@ -100,15 +100,15 @@ public class FightProcessor {
 
         for (Monster monster : monsterParty.getChars()) {
             for (LastingEffect lastingEffect : monster.getLastingEffects()) {
-                if(lastingEffect instanceof GameCharEffect){
-                    GameCharEffect gce = (GameCharEffect)lastingEffect;
+                if (lastingEffect instanceof GameCharEffect) {
+                    GameCharEffect gce = (GameCharEffect) lastingEffect;
                     gce.apply(monster);
                 }
             }
         }
     }
 
-    private void tickAndDeleteEndedLastingEffects(){
+    private void tickAndDeleteEndedLastingEffects() {
         dlog("Processing playerParty effects");
         for (PlayerChar playerChar : playerParty.getChars()) {
             Iterator<LastingEffect> i = playerChar.getLastingEffects().iterator();
@@ -137,9 +137,9 @@ public class FightProcessor {
         }
     }
 
-    private void setFirstTurn(){
+    private void setFirstTurn() {
         //TODO set first turn to gameChar with more speed
-        isPlayersTurn =true;
+        isPlayersTurn = true;
     }
 
 }

@@ -6,7 +6,7 @@ package com.thecop.rpgtest.mech.damage;
 public class Damage {
 
     private int amount;
-    DamageType damageType=DamageType.PHYSICAL;
+    DamageType damageType = DamageType.PHYSICAL;
 
     public Damage(int amount) {
         this.amount = amount;

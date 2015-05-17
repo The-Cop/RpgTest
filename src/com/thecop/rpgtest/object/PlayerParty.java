@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Created by TheCop on 16.05.2015.
  */
-public class PlayerParty extends Party<PlayerChar>{
+public class PlayerParty extends Party<PlayerChar> {
     private Backpack backpack = new Backpack();
     private Random random = new Random();
     //TODO add playerchar a link to its party;
@@ -18,7 +18,7 @@ public class PlayerParty extends Party<PlayerChar>{
         return backpack;
     }
 
-    public PlayerChar getRandomPlayer(){
+    public PlayerChar getRandomPlayer() {
         return chars.get(random.nextInt(chars.size()));
     }
 }

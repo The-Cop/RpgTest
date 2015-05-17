@@ -1,8 +1,8 @@
 package com.thecop.rpgtest.mech.effect.lasting.impl;
 
+import com.thecop.rpgtest.mech.damage.Damage;
 import com.thecop.rpgtest.mech.effect.IncomingDamageEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
-import com.thecop.rpgtest.mech.damage.Damage;
 
 import static com.thecop.rpgtest.Logger.print;
 
@@ -12,8 +12,8 @@ import static com.thecop.rpgtest.Logger.print;
 public class LastingAllDamageReduceEffect extends LastingEffect<LastingAllDamageReduceEffect> implements IncomingDamageEffect {
     int damageReduce;
 
-    public LastingAllDamageReduceEffect(String name,String description,int length,  int damageReduce) {
-        super(name, description,length);
+    public LastingAllDamageReduceEffect(String name, String description, int length, int damageReduce) {
+        super(name, description, length);
         this.damageReduce = damageReduce;
     }
 
@@ -34,9 +34,9 @@ public class LastingAllDamageReduceEffect extends LastingEffect<LastingAllDamage
 
     @Override
     public Damage modifyIncomingDamage(Damage damage) {
-        int newAmount = damage.getAmount()-damageReduce;
-        if(newAmount<0){
-            newAmount=0;
+        int newAmount = damage.getAmount() - damageReduce;
+        if (newAmount < 0) {
+            newAmount = 0;
         }
         print(getName() + " reduces damage by " + damageReduce + " to " + newAmount);
         damage.setAmount(newAmount);

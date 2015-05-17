@@ -9,7 +9,7 @@ import com.thecop.rpgtest.mech.spell.Spell;
  */
 public class SpellDamageAmplifier extends LastingEffect<SpellDamageAmplifier> implements SpellModifier {
     public SpellDamageAmplifier(String name, String description, int length) {
-        super(name, description,length);
+        super(name, description, length);
     }
 
     private SpellDamageAmplifier(SpellDamageAmplifier other) {

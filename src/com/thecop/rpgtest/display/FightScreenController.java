@@ -31,7 +31,7 @@ public class FightScreenController {
             print(player.getName() + " - what to do?");
             printFightCommands();
             FightCommand command = FightCommand.getCommand(Util.input());
-            if(command==null){
+            if (command == null) {
                 continue;
             }
             switch (command) {
@@ -40,7 +40,7 @@ public class FightScreenController {
                     if (target == null) {
                         break;
                     }
-                    return new PlayerAction(PlayerActionType.USUAL_ATTACK, target,null,null);
+                    return new PlayerAction(PlayerActionType.USUAL_ATTACK, target, null, null);
                 case SPELL:
                     PlayerAction spellAction = chooseSpell(player);
                     if (spellAction != null) {
@@ -138,7 +138,7 @@ public class FightScreenController {
             if (player.canCastSpell(spell)) {
                 print(spell.getControlString() + " - " + spell.getName());
                 for (Effect effect : spell.getEffects()) {
-                    print("\t\t"+effect.getDescription());
+                    print("\t\t" + effect.getDescription());
                 }
             } else {
                 print(spell.getControlString() + " - " + spell.getName() + " - can not cast spell");

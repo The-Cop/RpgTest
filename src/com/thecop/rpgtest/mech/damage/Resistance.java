@@ -8,7 +8,7 @@ public class Resistance {
     private int strength;
 
     public Resistance(DamageType type, int strength) {
-        if(type==DamageType.PURE){
+        if (type == DamageType.PURE) {
             throw new IllegalArgumentException("NO RESISTANCE FOR PURE DAMAGE!!!!1111");
         }
         this.type = type;

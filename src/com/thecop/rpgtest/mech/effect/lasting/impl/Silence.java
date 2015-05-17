@@ -7,9 +7,9 @@ import com.thecop.rpgtest.mech.spell.Spell;
 /**
  * Created by Admin on 01.04.2015.
  */
-public class Silence  extends LastingEffect<Silence> implements SpellModifier {
+public class Silence extends LastingEffect<Silence> implements SpellModifier {
     public Silence(String name, String description, int length) {
-        super(name, description,length);
+        super(name, description, length);
     }
 
     private Silence(Silence other) {

@@ -12,7 +12,7 @@ import java.util.List;
 public class CopyUtils {
     public static List<Effect> getCopy(List<Effect> list) {
 
-        if(list==null) {
+        if (list == null) {
             return Collections.emptyList();
         }
         List<Effect> result = new ArrayList<>();

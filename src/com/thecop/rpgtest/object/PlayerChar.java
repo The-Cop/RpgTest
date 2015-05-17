@@ -19,21 +19,20 @@ public class PlayerChar extends GameChar {
         this.baseAttackDamageAmount = baseAttackDamageAmount;
     }
 
-    public void performAction(PlayerAction action){
+    public void performAction(PlayerAction action) {
         //TODO handle target==null
-        switch (action.getType()){
+        switch (action.getType()) {
             case USUAL_ATTACK:
                 attack(action.getTarget());
                 return;
             case SPELL:
-                castSpell(action.getSpell(),action.getTarget(),action.getPartyTarget());
+                castSpell(action.getSpell(), action.getTarget(), action.getPartyTarget());
                 return;
             case RUN:
                 //TODO implement runaway
                 throw new NotImplementedException();
         }
     }
-
 
 
     @Override

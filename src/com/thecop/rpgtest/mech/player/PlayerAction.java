@@ -41,8 +41,8 @@ public class PlayerAction {
         return "PlayerAction{" +
                 "type=" + type +
                 ", spell=" + spell +
-                ", target=" + (target==null ? "" : target.getName()) +
-                ", partyTarget=" + (partyTarget==null ? "" : partyTarget.getNames()) +
+                ", target=" + (target == null ? "" : target.getName()) +
+                ", partyTarget=" + (partyTarget == null ? "" : partyTarget.getNames()) +
                 '}';
     }
 }

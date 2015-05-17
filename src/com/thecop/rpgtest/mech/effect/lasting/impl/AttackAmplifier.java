@@ -10,8 +10,8 @@ import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 public class AttackAmplifier extends LastingEffect<AttackAmplifier> implements AttackModifier {
     double multiplier;
 
-    public AttackAmplifier(String name, String description,int length,  double multiplier) {
-        super(name,description, length);
+    public AttackAmplifier(String name, String description, int length, double multiplier) {
+        super(name, description, length);
         this.multiplier = multiplier;
     }
 
@@ -23,7 +23,7 @@ public class AttackAmplifier extends LastingEffect<AttackAmplifier> implements A
 
     @Override
     public Damage modifyAttack(Damage damage) {
-        damage.setAmount((int)(damage.getAmount()*multiplier));
+        damage.setAmount((int) (damage.getAmount() * multiplier));
 //        print("Damage is amplified by " + multiplier);
         return damage;
     }

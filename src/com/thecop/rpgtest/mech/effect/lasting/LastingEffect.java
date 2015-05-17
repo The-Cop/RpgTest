@@ -9,9 +9,8 @@ public abstract class LastingEffect<T> extends Effect<T> {
     protected int length;
 
 
-
-    public LastingEffect(String name,String description, int length) {
-        super(name,description);
+    public LastingEffect(String name, String description, int length) {
+        super(name, description);
         this.length = length;
     }
 

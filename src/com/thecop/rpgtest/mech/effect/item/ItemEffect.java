@@ -8,7 +8,7 @@ import com.thecop.rpgtest.mech.effect.Effect;
 public abstract class ItemEffect<T> extends Effect<T> {
 
     public ItemEffect(String name, String description) {
-        super(name,description);
+        super(name, description);
     }
 
     public ItemEffect(ItemEffect other) {

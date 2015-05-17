@@ -25,6 +25,7 @@ public class Backpack {
 
     /**
      * adds an item without any constraints
+     *
      * @param item
      */
     public void putQuest(Item item) {
@@ -45,8 +46,8 @@ public class Backpack {
      * take one out and put one another.
      * Can be impossible if items count is more than maximum due to quest items
      */
-    public boolean canExchange(){
-        return (items.size()-1) >= BACKPACK_SIZE;
+    public boolean canExchange() {
+        return (items.size() - 1) >= BACKPACK_SIZE;
     }
 
 

@@ -21,7 +21,7 @@ public abstract class Effect<T> implements Copyable<T> {
     }
 
 
-    public  String getName() {
+    public String getName() {
         return name;
     }
 
