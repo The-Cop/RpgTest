@@ -1,10 +1,10 @@
-package com.thecop.rpgtest.mech.screen;
+package com.thecop.rpgtest.display;
 
 /**
  * Created by TheCop on 26.03.2015.
  */
 public enum FightCommand {
-    ATTACK("A","Ususal attack"),SPELL("S", "Cast a spell"),RUN("R","Run away"),BACK("Q","Back to the previous menu");
+    ATTACK("A","Usual attack"),SPELL("S", "Cast a spell"),RUN("R","Run away"),BACK("Q","Back to the previous menu");
 
     private String inputString;
     private String description;

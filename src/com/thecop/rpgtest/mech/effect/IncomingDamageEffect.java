@@ -1,6 +1,6 @@
 package com.thecop.rpgtest.mech.effect;
 
-import com.thecop.rpgtest.mech.fight.Damage;
+import com.thecop.rpgtest.mech.damage.Damage;
 
 /**
  * Created by TheCop on 24.03.2015.

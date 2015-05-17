@@ -2,7 +2,7 @@ package com.thecop.rpgtest.mech.effect.lasting.impl;
 
 import com.thecop.rpgtest.mech.effect.IncomingDamageEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
-import com.thecop.rpgtest.mech.fight.Damage;
+import com.thecop.rpgtest.mech.damage.Damage;
 
 import static com.thecop.rpgtest.Logger.print;
 
@@ -12,8 +12,8 @@ import static com.thecop.rpgtest.Logger.print;
 public class LastingAllDamageReduceEffect extends LastingEffect<LastingAllDamageReduceEffect> implements IncomingDamageEffect {
     int damageReduce;
 
-    public LastingAllDamageReduceEffect(String name, int length, String description, int damageReduce) {
-        super(name, length, description);
+    public LastingAllDamageReduceEffect(String name,String description,int length,  int damageReduce) {
+        super(name, description,length);
         this.damageReduce = damageReduce;
     }
 

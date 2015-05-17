@@ -11,8 +11,8 @@ public class InstantHeal extends InstantEffect<InstantHeal> implements GameCharE
 
     private int healStrength;
 
-    public InstantHeal(String name, int healStrength) {
-        super(name);
+    public InstantHeal(String name,String description, int healStrength) {
+        super(name,description);
         this.healStrength = healStrength;
     }
 

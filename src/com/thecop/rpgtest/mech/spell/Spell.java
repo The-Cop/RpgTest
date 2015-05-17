@@ -46,6 +46,10 @@ public class Spell implements Copyable<Spell>{
         this.effects = CopyUtils.getCopy(other.effects);
     }
 
+    public boolean isAOE(){
+        return targetType.isAOE();
+    }
+
 
     public String getName() {
         return name;

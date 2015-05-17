@@ -7,20 +7,17 @@ import com.thecop.rpgtest.mech.effect.Effect;
  */
 public abstract class LastingEffect<T> extends Effect<T> {
     protected int length;
-    protected String description;
 
 
-    public LastingEffect(String name, int length, String description) {
-        super(name);
-        //TODO FIX THIS SHIT: length +1 to compensate ticking of the turn the effect was cast
-        this.length = length + 1;
-        this.description = description;
+
+    public LastingEffect(String name,String description, int length) {
+        super(name,description);
+        this.length = length;
     }
 
     public LastingEffect(LastingEffect other) {
         super(other);
         this.length = other.length;
-        this.description = other.description;
     }
 
     public int getLength() {
@@ -38,7 +35,4 @@ public abstract class LastingEffect<T> extends Effect<T> {
         return length == 0;
     }
 
-    public String getDescription() {
-        return description;
-    }
 }

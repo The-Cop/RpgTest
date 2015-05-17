@@ -2,8 +2,8 @@ package com.thecop.rpgtest.mech.effect.instant.impl;
 
 import com.thecop.rpgtest.mech.effect.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
-import com.thecop.rpgtest.mech.fight.Damage;
-import com.thecop.rpgtest.mech.fight.DamageType;
+import com.thecop.rpgtest.mech.damage.Damage;
+import com.thecop.rpgtest.mech.damage.DamageType;
 import com.thecop.rpgtest.object.GameChar;
 
 /**
@@ -12,8 +12,8 @@ import com.thecop.rpgtest.object.GameChar;
 public class InstantDamageEffect extends InstantEffect<InstantDamageEffect> implements GameCharEffect {
     private Damage damage;
 
-    public InstantDamageEffect(String name, int damage, DamageType damageType) {
-        super(name);
+    public InstantDamageEffect(String name,String description, int damage, DamageType damageType) {
+        super(name,description);
         this.damage = new Damage(damage,damageType);
     }
 

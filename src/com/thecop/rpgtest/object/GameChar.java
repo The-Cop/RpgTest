@@ -1,14 +1,18 @@
 package com.thecop.rpgtest.object;
 
 import com.thecop.rpgtest.Logger;
+import com.thecop.rpgtest.mech.damage.AttackRange;
+import com.thecop.rpgtest.mech.damage.Damage;
+import com.thecop.rpgtest.mech.damage.DamageType;
+import com.thecop.rpgtest.mech.damage.Resistance;
 import com.thecop.rpgtest.mech.effect.AttackModifier;
 import com.thecop.rpgtest.mech.effect.Effect;
 import com.thecop.rpgtest.mech.effect.IncomingDamageEffect;
 import com.thecop.rpgtest.mech.effect.SpellModifier;
+import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
-import com.thecop.rpgtest.mech.fight.*;
 import com.thecop.rpgtest.mech.spell.Spell;
-import com.thecop.rpgtest.mech.spell.SpellProcessor;
+import com.thecop.rpgtest.mech.spell.SpellTargetType;
 import com.thecop.rpgtest.utils.Util;
 
 import java.util.ArrayList;
@@ -16,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.thecop.rpgtest.Logger.dlog;
 import static com.thecop.rpgtest.Logger.print;
 
 /**
@@ -35,11 +40,11 @@ public abstract class GameChar {
     protected AttackRange baseAttackRange;
 
     protected Map<DamageType, Resistance> resistances = new HashMap<>();
-    ;
     protected List<LastingEffect> lastingEffects = new ArrayList<>();
-    ;
     protected List<Spell> spells = new ArrayList<>();
-    ;
+    //TODO 7 active items and a backpack with same limit (10?)
+    //Backpack may be common for playable party
+
 
 
     public GameChar(String name, int health, int maxHealth, int mana, int maxMana, AttackRange baseAttackRange) {
@@ -128,10 +133,52 @@ public abstract class GameChar {
         return mana >= modSpell.getManaCost();
     }
 
-    public void castSpell(Spell spell, GameChar target) {
+    public void castSpell(Spell spell, GameChar target, Party partyTarget) {
         spell = getModifiedSpell(spell);
+        dlog("Casting spell " + spell.toString() + " on " +(target!=null ? target.getName() : partyTarget.getNames()));
         mana = mana - spell.getManaCost();
-        SpellProcessor.applySpell(spell, this, target);
+        //AOE spell
+        if(spell.isAOE()){
+            if(partyTarget==null){
+                throw new IllegalArgumentException("aoeTarget can not be null for AOE spells");
+            }
+            applyAOESpell(spell,partyTarget);
+            return;
+        }
+        //single target spell
+        if(!spell.isAOE()){
+            //self only
+            if(spell.getTargetType()== SpellTargetType.SELF){
+                applySingleTargetSpell(spell,this);
+            }
+            //any target
+            else {
+                if(target==null){
+                    throw new IllegalArgumentException("target can not be null for single-target spells");
+                }
+                applySingleTargetSpell(spell,target);
+            }
+        }
+    }
+
+    private void applyAOESpell(Spell spell, Party target){
+        for (Object gameCharObj : target.getChars()) {
+            GameChar gc = (GameChar) gameCharObj;
+            applySingleTargetSpell(spell,gc);
+        }
+    }
+
+    private void applySingleTargetSpell(Spell spell, GameChar target){
+        for (Effect effect : spell.getEffects()) {
+            if (effect instanceof LastingEffect) {
+                target.addEffect((LastingEffect) effect);
+                print(target.getName() + " is now affected by " + effect.getName());
+            } else if (effect instanceof InstantEffect) {
+                InstantEffect ie = (InstantEffect) effect;
+                dlog("Applying instant effect " + ie.getName() + " to " + target.getName());
+                ie.applyInstantEffect(target);
+            }
+        }
     }
 
     public boolean canAttack() {

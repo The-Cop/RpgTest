@@ -8,13 +8,16 @@ import com.thecop.rpgtest.mech.Copyable;
  */
 public abstract class Effect<T> implements Copyable<T> {
     protected String name;
+    protected String description;
 
-    public Effect(String name) {
-        this.name=name;
+    public Effect(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    protected Effect(Effect other) {
+    public Effect(Effect other) {
         this.name = other.name;
+        this.description = other.description;
     }
 
 
@@ -22,10 +25,15 @@ public abstract class Effect<T> implements Copyable<T> {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "Effect{" +
                 "name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

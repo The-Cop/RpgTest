@@ -8,10 +8,9 @@ import com.thecop.rpgtest.object.GameChar;
  */
 public abstract class InstantEffect<T> extends Effect<T>{
 
-    public InstantEffect(String name) {
-        super(name);
+    public InstantEffect(String name, String description) {
+        super(name, description);
     }
-
     protected InstantEffect(InstantEffect other) {
         super(other);
     }
