@@ -44,9 +44,6 @@ public class FightProcessor {
             tickAndDeleteEndedLastingEffects();
             applyLastingEffects();
 
-            //TODO first tick of newly applied effect goes nowhere because it is not processed but length is reduced
-            //TODO maybe set boolean "added this turn" - and if so, no tick for it
-
             print("=======END OF TURN====================================================================================");
         }
         if (playerParty.isAlive()) {
