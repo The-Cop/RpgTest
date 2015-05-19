@@ -11,15 +11,18 @@ import java.util.List;
 public class Item {
     private List<Effect> effects = new ArrayList<>();
     private String name;
+    private String description;
 
-    public Item(String name, List<Effect> effects) {
+    public Item(String name,String description, List<Effect> effects) {
         this.name = name;
         this.effects.addAll(effects);
+        this.description=description;
     }
 
-    public Item(String name, Effect effect) {
+    public Item(String name,String description, Effect effect) {
         this.name = name;
         this.effects.add(effect);
+        this.description=description;
     }
 
 
@@ -27,15 +30,11 @@ public class Item {
         return effects;
     }
 
-    public void setEffects(List<Effect> effects) {
-        this.effects = effects;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDescription() {
+        return description;
     }
 }

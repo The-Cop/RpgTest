@@ -278,6 +278,7 @@ public abstract class GameChar {
     }
 
     public int getMaxHealth() {
+        //TODO use this method instead of direct field access; move through effects to get modified maxHealth
         return maxHealth;
     }
 
