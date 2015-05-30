@@ -1,4 +1,4 @@
-package com.thecop.rpgtest.mech.effect;
+package com.thecop.rpgtest.mech.effect.types;
 
 import com.thecop.rpgtest.mech.damage.Damage;
 

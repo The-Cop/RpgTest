@@ -1,7 +1,8 @@
 package com.thecop.rpgtest.mech.effect.lasting.impl;
 
 import com.thecop.rpgtest.mech.damage.Damage;
-import com.thecop.rpgtest.mech.effect.IncomingDamageEffect;
+import com.thecop.rpgtest.mech.effect.EffectTargetType;
+import com.thecop.rpgtest.mech.effect.types.IncomingDamageEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 
 import static com.thecop.rpgtest.Logger.print;
@@ -10,10 +11,10 @@ import static com.thecop.rpgtest.Logger.print;
  * Created by TheCop on 25.03.2015.
  */
 public class LastingAllDamageReduceEffect extends LastingEffect<LastingAllDamageReduceEffect> implements IncomingDamageEffect {
-    int damageReduce;
+    private int damageReduce;
 
-    public LastingAllDamageReduceEffect(String name, String description, int length, int damageReduce) {
-        super(name, description, length);
+    public LastingAllDamageReduceEffect(String name, String description, EffectTargetType targetType, int length, int damageReduce) {
+        super(name, description, targetType, length);
         this.damageReduce = damageReduce;
     }
 

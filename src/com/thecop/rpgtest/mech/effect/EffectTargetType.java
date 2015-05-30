@@ -1,9 +1,9 @@
-package com.thecop.rpgtest.mech.spell;
+package com.thecop.rpgtest.mech.effect;
 
 /**
- * Created by TheCop on 23.03.2015.
+ * Created by TheCop on 31.05.2015.
  */
-public enum SpellTargetType {
+public enum EffectTargetType {
     ENEMY,
     ENEMY_AOE,
     FRIENDLY,

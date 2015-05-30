@@ -1,21 +1,18 @@
 package com.thecop.rpgtest;
 
 import com.thecop.rpgtest.mech.damage.AttackRange;
+import com.thecop.rpgtest.mech.damage.Damage;
 import com.thecop.rpgtest.mech.damage.DamageType;
 import com.thecop.rpgtest.mech.damage.Resistance;
+import com.thecop.rpgtest.mech.effect.EffectTargetType;
+import com.thecop.rpgtest.mech.effect.TargetableEffect;
 import com.thecop.rpgtest.mech.effect.instant.impl.InstantDamageEffect;
-import com.thecop.rpgtest.mech.effect.instant.impl.InstantHeal;
-import com.thecop.rpgtest.mech.effect.lasting.impl.AttackAmplifier;
-import com.thecop.rpgtest.mech.effect.lasting.impl.LastingAllDamageReduceEffect;
-import com.thecop.rpgtest.mech.effect.lasting.impl.LastingDamageEffect;
-import com.thecop.rpgtest.mech.effect.lasting.impl.Silence;
-import com.thecop.rpgtest.mech.fight.FightProcessor;
+import com.thecop.rpgtest.mech.fight.Fight;
 import com.thecop.rpgtest.mech.spell.Spell;
-import com.thecop.rpgtest.mech.spell.SpellTargetType;
-import com.thecop.rpgtest.object.Monster;
-import com.thecop.rpgtest.object.MonsterParty;
-import com.thecop.rpgtest.object.PlayerChar;
-import com.thecop.rpgtest.object.PlayerParty;
+import com.thecop.rpgtest.object.impl.Monster;
+import com.thecop.rpgtest.object.impl.MonsterParty;
+import com.thecop.rpgtest.object.impl.PlayerChar;
+import com.thecop.rpgtest.object.impl.PlayerParty;
 
 import static com.thecop.rpgtest.Logger.print;
 
@@ -51,14 +48,41 @@ public class Main {
 
     private static PlayerChar getPlayer(int number) {
         PlayerChar p = new PlayerChar("HERO" + number, 1000, 250, AttackRange.MELEE, 15);
-        p.addSpell(new Spell("AOE Lightning", "l", 3, SpellTargetType.ENEMY_AOE, new InstantDamageEffect("Electro damage effect", "Deal 100 electro damage to each enemy", 100, DamageType.ELECTRIC)));
-        p.addSpell(new Spell("Pure force", "p", 7, SpellTargetType.ENEMY, new InstantDamageEffect("Pure force effect", "Deal 7 pure damage", 7, DamageType.PURE)));
-        p.addSpell(new Spell("Burn", "b", 4, SpellTargetType.ENEMY, new LastingDamageEffect("Burning", "Deal 20 fire damage each turn for 3 turns", 3, 20, DamageType.FIRE)));
-        p.addSpell(new Spell("Instant heal", "i", 10, SpellTargetType.FRIENDLY, new InstantHeal("Instant healing", "Heals 10 hp", 10)));
-        p.addSpell(new Spell("AOE heal", "ia", 10, SpellTargetType.FRIENDLY_AOE, new InstantHeal("Instant aoe healing", "Heals 10 hp to all allies", 10)));
-        p.addSpell(new Spell("Shield spell", "s", 10, SpellTargetType.FRIENDLY, new LastingAllDamageReduceEffect("Shield", "Reduces all incoming damage by 5", 10, 5)));
-        p.addSpell(new Spell("Critical strike", "c", 15, SpellTargetType.FRIENDLY, new AttackAmplifier("Critical Strike", "Grants x2.5 attack damage THIS turn", 1, 2.5)));
-        p.addSpell(new Spell("Self silence", "shh", 15, SpellTargetType.SELF, new Silence("Self silence", "SHUT THE FUCK UP!", 20)));
+        p.addSpell(new Spell(
+                        "Enemy AOE Flamestrike",
+                        "fe",
+                        10,
+                        new TargetableEffect[]{
+                                new InstantDamageEffect("Flame enemy aoe","Burns your foes", EffectTargetType.ENEMY_AOE, new Damage(100,DamageType.FIRE))
+                        })
+        );
+        p.addSpell(new Spell(
+                        "Friendly AOE Flamestrike",
+                        "ff",
+                        10,
+                        new TargetableEffect[]{
+                                new InstantDamageEffect("Flame friendly aoe","Burns your foes", EffectTargetType.FRIENDLY_AOE, new Damage(100,DamageType.FIRE))
+                        })
+        );
+        p.addSpell(new Spell(
+                        "All AOE Flamestrike",
+                        "fa",
+                        10,
+                        new TargetableEffect[]{
+                                new InstantDamageEffect("Flame friendly aoe","Burns your foes", EffectTargetType.FRIENDLY_AOE, new Damage(100,DamageType.FIRE)),
+                                new InstantDamageEffect("Flame enemy aoe","Burns your foes", EffectTargetType.ENEMY_AOE, new Damage(100,DamageType.FIRE)),
+                                new InstantDamageEffect("Flame single enemy ","Burns your foes", EffectTargetType.ENEMY, new Damage(33,DamageType.FIRE)),
+                                new InstantDamageEffect("Flame single friend ","Burns your foes", EffectTargetType.FRIENDLY, new Damage(11,DamageType.FIRE))
+                        })
+        );
+//        p.addSpell(new Spell("AOE Lightning", "l", 3, SpellTargetType.ENEMY_AOE, new InstantDamageEffect("Electro damage effect", "Deal 100 electro damage to each enemy", 100, DamageType.ELECTRIC)));
+//        p.addSpell(new Spell("Pure force", "p", 7, SpellTargetType.ENEMY, new InstantDamageEffect("Pure force effect", "Deal 7 pure damage", 7, DamageType.PURE)));
+//        p.addSpell(new Spell("Burn", "b", 4, SpellTargetType.ENEMY, new LastingDamageEffect("Burning", "Deal 20 fire damage each turn for 3 turns", 3, 20, DamageType.FIRE)));
+//        p.addSpell(new Spell("Instant heal", "i", 10, SpellTargetType.FRIENDLY, new InstantHeal("Instant healing", "Heals 10 hp", 10)));
+//        p.addSpell(new Spell("AOE heal", "ia", 10, SpellTargetType.FRIENDLY_AOE, new InstantHeal("Instant aoe healing", "Heals 10 hp to all allies", 10)));
+//        p.addSpell(new Spell("Shield spell", "s", 10, SpellTargetType.FRIENDLY, new LastingAllDamageReduceEffect("Shield", "Reduces all incoming damage by 5", 10, 5)));
+//        p.addSpell(new Spell("Critical strike", "c", 15, SpellTargetType.FRIENDLY, new AttackAmplifier("Critical Strike", "Grants x2.5 attack damage THIS turn", 1, 2.5)));
+//        p.addSpell(new Spell("Self silence", "shh", 15, SpellTargetType.SELF, new Silence("Self silence", "SHUT THE FUCK UP!", 20)));
 
 
         p.addResistance(new Resistance(DamageType.PHYSICAL, 3));
@@ -71,7 +95,7 @@ public class Main {
     }
 
     private static Monster getMonsterRat() {
-        Monster p = new Monster("BIG RAT", 1100, 40, AttackRange.MELEE, 20);
+        Monster p = new Monster("BIG RAT", 1100, 40, AttackRange.MELEE, 0);
 //        p.addSpell(new Spell("Lightning","l",3, SpellTargetType.ENEMY,new InstantDamageEffect("Electro damage effect",7,DamageType.ELECTRIC)));
 //        p.addSpell(new Spell("Pure force","p",7, SpellTargetType.ENEMY,new InstantDamageEffect("Pure force effect",7,DamageType.PURE)));
 //        p.addSpell(new Spell("Burn","b",4, SpellTargetType.ENEMY,new LastingDamageEffect("Burning",3,2,DamageType.FIRE,"Slowly burns your body")));
@@ -85,7 +109,7 @@ public class Main {
     }
 
     private static Monster getMonsterCat() {
-        Monster p = new Monster("LARGE CAT", 1500, 400, AttackRange.MELEE, 20);
+        Monster p = new Monster("LARGE CAT", 1500, 400, AttackRange.MELEE, 0);
 
         p.addResistance(new Resistance(DamageType.PHYSICAL, 7));
         p.addResistance(new Resistance(DamageType.FIRE, 0));
@@ -105,7 +129,7 @@ public class Main {
         MonsterParty mp = new MonsterParty();
         mp.getChars().add(rat);
         mp.getChars().add(cat);
-        FightProcessor fp = new FightProcessor(pp, mp);
+        Fight fp = new Fight(pp, mp);
         if (fp.fight() == null) {
             print("YOU LOST!");
         }

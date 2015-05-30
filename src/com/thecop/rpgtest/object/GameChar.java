@@ -5,14 +5,17 @@ import com.thecop.rpgtest.mech.damage.AttackRange;
 import com.thecop.rpgtest.mech.damage.Damage;
 import com.thecop.rpgtest.mech.damage.DamageType;
 import com.thecop.rpgtest.mech.damage.Resistance;
-import com.thecop.rpgtest.mech.effect.AttackModifier;
 import com.thecop.rpgtest.mech.effect.Effect;
-import com.thecop.rpgtest.mech.effect.IncomingDamageEffect;
-import com.thecop.rpgtest.mech.effect.SpellModifier;
+import com.thecop.rpgtest.mech.effect.TargetableEffect;
 import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
+import com.thecop.rpgtest.mech.effect.types.AttackModifier;
+import com.thecop.rpgtest.mech.effect.types.IncomingDamageEffect;
+import com.thecop.rpgtest.mech.effect.types.SpellModifier;
+import com.thecop.rpgtest.mech.fight.Fight;
 import com.thecop.rpgtest.mech.spell.Spell;
-import com.thecop.rpgtest.mech.spell.SpellTargetType;
+import com.thecop.rpgtest.mech.spell.SpellSingleTargetRequirements;
+import com.thecop.rpgtest.mech.spell.SpellTarget;
 import com.thecop.rpgtest.utils.Util;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import static com.thecop.rpgtest.Logger.print;
 /**
  * Created by TheCop on 24.03.2015.
  */
-public abstract class GameChar {
+public abstract class GameChar implements SpellTarget {
     public static final double RESISTANCE_FORMULA_MULTIPLIER = 0.04d;
 
     protected String name;
@@ -131,51 +134,65 @@ public abstract class GameChar {
         return mana >= modSpell.getManaCost();
     }
 
-    public void castSpell(Spell spell, GameChar target, Party partyTarget) {
+    public void castSpell(Spell spell, Fight fight, GameChar enemyTarget, GameChar friendlyTarget) {
         spell = getModifiedSpell(spell);
-        dlog("Casting spell " + spell.toString() + " on " + (target != null ? target.getName() : partyTarget.getNames()));
+        dlog("Casting spell " + spell.toString());
+        SpellSingleTargetRequirements req = spell.getSpellSingleTargetRequirements();
+        if (req == SpellSingleTargetRequirements.FRIENDLY || req == SpellSingleTargetRequirements.BOTH) {
+            //friendlyTarget must be single and non-null
+            if (friendlyTarget == null) {
+                throw new IllegalArgumentException("friendlyTarget can not be null for spell with SpellSingleTargetRequirements = " + req);
+            }
+        }
+        if (req == SpellSingleTargetRequirements.ENEMY || req == SpellSingleTargetRequirements.BOTH) {
+            //friendlyTarget must be single and non-null
+            if (enemyTarget == null) {
+                throw new IllegalArgumentException("enemyTarget can not be null for spell with SpellSingleTargetRequirements = " + req);
+            }
+        }
+
+        Party friendlyParty = fight.isPlayersTurn() ? fight.getPlayerParty() : fight.getMonsterParty();
+        Party enemyParty = fight.isPlayersTurn() ? fight.getMonsterParty() : fight.getPlayerParty();
+
+        for (TargetableEffect effect : spell.getEffects()) {
+            switch (effect.getTargetType()) {
+                case SELF:
+                    applySingleTargetEffect(effect,this);
+                    break;
+                case FRIENDLY:
+                    applySingleTargetEffect(effect,friendlyTarget);
+                    break;
+                case ENEMY:
+                    applySingleTargetEffect(effect,enemyTarget);
+                    break;
+                case FRIENDLY_AOE:
+                    applyAOEEffect(effect,friendlyParty);
+                    break;
+                case ENEMY_AOE:
+                    applyAOEEffect(effect,enemyParty);
+                    break;
+            }
+        }
+
         mana = mana - spell.getManaCost();
-        //AOE spell
-        if (spell.isAOE()) {
-            if (partyTarget == null) {
-                throw new IllegalArgumentException("aoeTarget can not be null for AOE spells");
-            }
-            applyAOESpell(spell, partyTarget);
-            return;
-        }
-        //single target spell
-        if (!spell.isAOE()) {
-            //self only
-            if (spell.getTargetType() == SpellTargetType.SELF) {
-                applySingleTargetSpell(spell, this);
-            }
-            //any target
-            else {
-                if (target == null) {
-                    throw new IllegalArgumentException("target can not be null for single-target spells");
-                }
-                applySingleTargetSpell(spell, target);
-            }
-        }
     }
 
-    private void applyAOESpell(Spell spell, Party target) {
+
+    private void applyAOEEffect(TargetableEffect effect, Party target) {
         for (Object gameCharObj : target.getChars()) {
             GameChar gc = (GameChar) gameCharObj;
-            applySingleTargetSpell(spell, gc);
+            applySingleTargetEffect(effect, gc);
         }
     }
 
-    private void applySingleTargetSpell(Spell spell, GameChar target) {
-        for (Effect effect : spell.getEffects()) {
-            if (effect instanceof LastingEffect) {
-                target.addEffect((LastingEffect) effect);
-                print(target.getName() + " is now affected by " + effect.getName());
-            } else if (effect instanceof InstantEffect) {
-                InstantEffect ie = (InstantEffect) effect;
-                dlog("Applying instant effect " + ie.getName() + " to " + target.getName());
-                ie.applyInstantEffect(target);
-            }
+    private void applySingleTargetEffect(TargetableEffect effect, GameChar target) {
+        if (effect instanceof LastingEffect) {
+            target.addEffect((LastingEffect) effect);
+            print(target.getName() + " is now affected by " + effect.getName());
+        } else if (effect instanceof InstantEffect) {
+            InstantEffect ie = (InstantEffect) effect;
+            dlog("Applying instant effect " + ie.getName() + " to " + target.getName());
+            ie.applyInstantEffect(target);
         }
     }
 

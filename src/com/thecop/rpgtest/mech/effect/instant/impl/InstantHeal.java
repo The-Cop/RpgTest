@@ -1,6 +1,7 @@
 package com.thecop.rpgtest.mech.effect.instant.impl;
 
-import com.thecop.rpgtest.mech.effect.GameCharEffect;
+import com.thecop.rpgtest.mech.effect.EffectTargetType;
+import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
 import com.thecop.rpgtest.object.GameChar;
 
@@ -11,8 +12,8 @@ public class InstantHeal extends InstantEffect<InstantHeal> implements GameCharE
 
     private int healStrength;
 
-    public InstantHeal(String name, String description, int healStrength) {
-        super(name, description);
+    public InstantHeal(String name, String description, EffectTargetType targetType, int healStrength) {
+        super(name, description, targetType);
         this.healStrength = healStrength;
     }
 

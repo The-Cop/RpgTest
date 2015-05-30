@@ -1,9 +1,11 @@
-package com.thecop.rpgtest.object;
+package com.thecop.rpgtest.object.impl;
 
 import com.thecop.rpgtest.mech.damage.AttackRange;
 import com.thecop.rpgtest.mech.damage.Damage;
 import com.thecop.rpgtest.mech.damage.DamageType;
+import com.thecop.rpgtest.mech.fight.Fight;
 import com.thecop.rpgtest.mech.player.PlayerAction;
+import com.thecop.rpgtest.object.GameChar;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -19,14 +21,14 @@ public class PlayerChar extends GameChar {
         this.baseAttackDamageAmount = baseAttackDamageAmount;
     }
 
-    public void performAction(PlayerAction action) {
+    public void performAction(PlayerAction action, Fight fight) {
         //TODO handle target==null
         switch (action.getType()) {
             case USUAL_ATTACK:
-                attack(action.getTarget());
+                attack(action.getEnemyTarget());
                 return;
             case SPELL:
-                castSpell(action.getSpell(), action.getTarget(), action.getPartyTarget());
+                castSpell(action.getSpell(),fight,action.getEnemyTarget(),action.getFriendlyTarget());
                 return;
             case RUN:
                 //TODO implement runaway

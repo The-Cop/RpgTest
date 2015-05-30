@@ -1,11 +1,14 @@
 package com.thecop.rpgtest.display;
 
 import com.thecop.rpgtest.mech.effect.Effect;
+import com.thecop.rpgtest.mech.fight.Fight;
 import com.thecop.rpgtest.mech.player.PlayerAction;
 import com.thecop.rpgtest.mech.player.PlayerActionType;
 import com.thecop.rpgtest.mech.spell.Spell;
-import com.thecop.rpgtest.mech.spell.SpellTargetType;
-import com.thecop.rpgtest.object.*;
+import com.thecop.rpgtest.object.GameChar;
+import com.thecop.rpgtest.object.Party;
+import com.thecop.rpgtest.object.impl.MonsterParty;
+import com.thecop.rpgtest.object.impl.PlayerChar;
 import com.thecop.rpgtest.utils.Util;
 
 import java.util.List;
@@ -18,12 +21,10 @@ import static com.thecop.rpgtest.Logger.print;
  */
 public class FightScreenController {
 
-    private MonsterParty monsterParty;
-    private PlayerParty playerParty;
+    private Fight fight;
 
-    public FightScreenController(MonsterParty monsterParty, PlayerParty playerParty) {
-        this.monsterParty = monsterParty;
-        this.playerParty = playerParty;
+    public FightScreenController(Fight fight) {
+        this.fight = fight;
     }
 
     public PlayerAction choosePlayerAction(PlayerChar player) {
@@ -36,7 +37,7 @@ public class FightScreenController {
             }
             switch (command) {
                 case ATTACK:
-                    GameChar target = chooseTarget(monsterParty);
+                    GameChar target = chooseTarget(fight.getMonsterParty());
                     if (target == null) {
                         break;
                     }
@@ -69,33 +70,29 @@ public class FightScreenController {
             for (Spell spell : spells) {
                 if (player.canCastSpell(spell)) {
                     if (spell.getControlString().equalsIgnoreCase(input)) {
-                        //self-target spell
-                        if (spell.getTargetType().equals(SpellTargetType.SELF)) {
-                            return new PlayerAction(PlayerActionType.SPELL, player, null, spell);
-                        }
-                        //enemy-target spell
-                        else if (spell.getTargetType().equals(SpellTargetType.ENEMY)) {
-                            GameChar target = chooseTarget(monsterParty);
-                            if (target != null) {
-                                return new PlayerAction(PlayerActionType.SPELL, target, null, spell);
-                            }
-                        }
-                        //friend-target spell
-                        else if (spell.getTargetType().equals(SpellTargetType.FRIENDLY)) {
-                            GameChar target = chooseTarget(playerParty);
-                            if (target != null) {
-                                return new PlayerAction(PlayerActionType.SPELL, target, null, spell);
-                            }
-                        }
-                        //enemy aoe
-                        else if (spell.getTargetType().equals(SpellTargetType.ENEMY_AOE)) {
-                            return new PlayerAction(PlayerActionType.SPELL, null, monsterParty, spell);
-                        }
-                        //friendly aoe
-                        else if (spell.getTargetType().equals(SpellTargetType.FRIENDLY_AOE)) {
-                            return new PlayerAction(PlayerActionType.SPELL, null, playerParty, spell);
-                        } else {
-                            throw new IllegalArgumentException("Unknown spell target type!");
+                        switch (spell.getSpellSingleTargetRequirements()) {
+                            case NONE:
+                                return new PlayerAction(PlayerActionType.SPELL, null, null, spell);
+                            case ENEMY:
+                                GameChar enemyTarget = chooseTarget(fight.getMonsterParty());
+                                if (enemyTarget != null) {
+                                    return new PlayerAction(PlayerActionType.SPELL, null, enemyTarget, spell);
+                                }
+                                break;
+                            case FRIENDLY:
+                                GameChar friendlyTarget = chooseTarget(fight.getPlayerParty());
+                                if (friendlyTarget != null) {
+                                    return new PlayerAction(PlayerActionType.SPELL, friendlyTarget, null, spell);
+                                }
+                                break;
+                            case BOTH:
+                                friendlyTarget = chooseTarget(fight.getPlayerParty());
+                                if(friendlyTarget==null) break;
+                                enemyTarget = chooseTarget(fight.getMonsterParty());
+                                if (enemyTarget != null && friendlyTarget != null) {
+                                    return new PlayerAction(PlayerActionType.SPELL, friendlyTarget, enemyTarget, spell);
+                                }
+                                break;
                         }
                     }
                 }
@@ -105,7 +102,8 @@ public class FightScreenController {
 
     private GameChar chooseTarget(Party party) {
         while (true) {
-            print("Choose target:");
+            String targetTypeText = party instanceof MonsterParty ? "enemy" : "friendly";
+            print("Choose " + targetTypeText + " target:");
             printPartyCharsList(party);
             print("Q - back");
             String input = Util.input();

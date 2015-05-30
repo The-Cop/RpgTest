@@ -2,13 +2,13 @@ package com.thecop.rpgtest.mech.fight;
 
 import com.thecop.rpgtest.display.Display;
 import com.thecop.rpgtest.display.FightScreenController;
-import com.thecop.rpgtest.mech.effect.GameCharEffect;
+import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 import com.thecop.rpgtest.mech.player.PlayerAction;
-import com.thecop.rpgtest.object.Monster;
-import com.thecop.rpgtest.object.MonsterParty;
-import com.thecop.rpgtest.object.PlayerChar;
-import com.thecop.rpgtest.object.PlayerParty;
+import com.thecop.rpgtest.object.impl.Monster;
+import com.thecop.rpgtest.object.impl.MonsterParty;
+import com.thecop.rpgtest.object.impl.PlayerChar;
+import com.thecop.rpgtest.object.impl.PlayerParty;
 
 import java.util.Iterator;
 
@@ -18,18 +18,19 @@ import static com.thecop.rpgtest.Logger.print;
 /**
  * Created by TheCop on 26.03.2015.
  */
-public class FightProcessor {
+public class Fight {
     private PlayerParty playerParty;
     private MonsterParty monsterParty;
     private boolean isPlayersTurn;
     private FightScreenController fsc;
 
-    public FightProcessor(PlayerParty playerParty, MonsterParty monsterParty) {
+    public Fight(PlayerParty playerParty, MonsterParty monsterParty) {
         this.playerParty = playerParty;
         this.monsterParty = monsterParty;
         setFirstTurn();
-        fsc = new FightScreenController(monsterParty, playerParty);
+        fsc = new FightScreenController(this);
     }
+
 
     /**
      * Start fighting
@@ -54,7 +55,6 @@ public class FightProcessor {
     }
 
     private void turn() {
-
         if (isPlayersTurn) {
             //TODO implement choosing which player to attack (or implement speed-based turn order)
             for (PlayerChar playerChar : playerParty.getChars()) {
@@ -65,9 +65,9 @@ public class FightProcessor {
                     action = fsc.choosePlayerAction(playerChar);
                 }
                 dlog("Action = " + action);
-                playerChar.performAction(action);
-                isPlayersTurn = false;
+                playerChar.performAction(action,this);
             }
+            isPlayersTurn = false;
         } else {
             //TODO implement monster's fight logic
             for (Monster monster : monsterParty.getChars()) {
@@ -139,4 +139,15 @@ public class FightProcessor {
         isPlayersTurn = true;
     }
 
+    public PlayerParty getPlayerParty() {
+        return playerParty;
+    }
+
+    public MonsterParty getMonsterParty() {
+        return monsterParty;
+    }
+
+    public boolean isPlayersTurn() {
+        return isPlayersTurn;
+    }
 }

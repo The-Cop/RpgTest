@@ -1,6 +1,7 @@
-package com.thecop.rpgtest.object;
+package com.thecop.rpgtest.object.impl;
 
 import com.thecop.rpgtest.mech.item.Backpack;
+import com.thecop.rpgtest.object.Party;
 
 import java.util.Random;
 

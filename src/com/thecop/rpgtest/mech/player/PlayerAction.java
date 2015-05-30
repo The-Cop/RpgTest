@@ -2,21 +2,20 @@ package com.thecop.rpgtest.mech.player;
 
 import com.thecop.rpgtest.mech.spell.Spell;
 import com.thecop.rpgtest.object.GameChar;
-import com.thecop.rpgtest.object.Party;
 
 /**
  * Created by TheCop on 21.03.2015.
  */
 public class PlayerAction {
     private PlayerActionType type;
-    private GameChar target;
-    private Party partyTarget;
+    private GameChar friendlyTarget;
+    private GameChar enemyTarget;
     private Spell spell;
 
-    public PlayerAction(PlayerActionType type, GameChar target, Party partyTarget, Spell spell) {
+    public PlayerAction(PlayerActionType type, GameChar friendlyTarget, GameChar enemyTarget, Spell spell) {
         this.type = type;
-        this.target = target;
-        this.partyTarget = partyTarget;
+        this.friendlyTarget = friendlyTarget;
+        this.enemyTarget = enemyTarget;
         this.spell = spell;
     }
 
@@ -25,24 +24,24 @@ public class PlayerAction {
     }
 
     public Spell getSpell() {
-        return spell;
+        return spell.getCopy();
     }
 
-    public GameChar getTarget() {
-        return target;
+    public GameChar getFriendlyTarget() {
+        return friendlyTarget;
     }
 
-    public Party getPartyTarget() {
-        return partyTarget;
+    public GameChar getEnemyTarget() {
+        return enemyTarget;
     }
 
     @Override
     public String toString() {
         return "PlayerAction{" +
                 "type=" + type +
+                ", friendlyTarget=" + friendlyTarget +
+                ", enemyTarget=" + enemyTarget +
                 ", spell=" + spell +
-                ", target=" + (target == null ? "" : target.getName()) +
-                ", partyTarget=" + (partyTarget == null ? "" : partyTarget.getNames()) +
                 '}';
     }
 }

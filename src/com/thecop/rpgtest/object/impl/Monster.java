@@ -1,8 +1,9 @@
-package com.thecop.rpgtest.object;
+package com.thecop.rpgtest.object.impl;
 
 import com.thecop.rpgtest.mech.damage.AttackRange;
 import com.thecop.rpgtest.mech.damage.Damage;
 import com.thecop.rpgtest.mech.damage.DamageType;
+import com.thecop.rpgtest.object.GameChar;
 
 /**
  * Created by Admin on 19.03.2015.

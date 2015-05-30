@@ -1,8 +1,8 @@
 package com.thecop.rpgtest.mech.effect.lasting.impl;
 
 import com.thecop.rpgtest.mech.damage.Damage;
-import com.thecop.rpgtest.mech.damage.DamageType;
-import com.thecop.rpgtest.mech.effect.GameCharEffect;
+import com.thecop.rpgtest.mech.effect.EffectTargetType;
+import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 import com.thecop.rpgtest.object.GameChar;
 
@@ -10,11 +10,11 @@ import com.thecop.rpgtest.object.GameChar;
  * Created by TheCop on 25.03.2015.
  */
 public class LastingDamageEffect extends LastingEffect<LastingDamageEffect> implements GameCharEffect {
-    Damage damage;
+    private Damage damage;
 
-    public LastingDamageEffect(String name, String description, int length, int damage, DamageType damageType) {
-        super(name, description, length);
-        this.damage = new Damage(damage, damageType);
+    public LastingDamageEffect(String name, String description, EffectTargetType targetType, int length, Damage damage) {
+        super(name, description, targetType, length);
+        this.damage = damage;
     }
 
     private LastingDamageEffect(LastingDamageEffect other) {
@@ -29,7 +29,7 @@ public class LastingDamageEffect extends LastingEffect<LastingDamageEffect> impl
     }
 
     public Damage getDamage() {
-        return new Damage(damage);
+        return damage.getCopy();
     }
 
     @Override

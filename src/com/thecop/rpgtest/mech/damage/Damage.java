@@ -1,9 +1,11 @@
 package com.thecop.rpgtest.mech.damage;
 
+import com.thecop.rpgtest.mech.Copyable;
+
 /**
  * Created by Admin on 20.03.2015.
  */
-public class Damage {
+public class Damage implements Copyable<Damage>{
 
     private int amount;
     DamageType damageType = DamageType.PHYSICAL;
@@ -45,5 +47,10 @@ public class Damage {
                 "amount=" + amount +
                 ", damageType=" + damageType +
                 '}';
+    }
+
+    @Override
+    public Damage getCopy() {
+        return new Damage(this);
     }
 }

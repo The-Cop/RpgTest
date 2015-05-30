@@ -1,7 +1,7 @@
 package com.thecop.rpgtest.mech.effect.permanent.impl;
 
 import com.thecop.rpgtest.mech.effect.Effect;
-import com.thecop.rpgtest.mech.effect.GameCharEffect;
+import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.permanent.PermanentEffect;
 import com.thecop.rpgtest.utils.CopyUtils;
 
