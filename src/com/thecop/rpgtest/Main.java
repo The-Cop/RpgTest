@@ -53,7 +53,7 @@ public class Main {
                         "fe",
                         10,
                         new TargetableEffect[]{
-                                new InstantDamageEffect("Flame enemy aoe","Burns your foes", EffectTargetType.ENEMY_AOE, new Damage(100,DamageType.FIRE))
+                                new InstantDamageEffect("Flame enemy aoe", "Burns your foes", EffectTargetType.ENEMY_AOE, new Damage(100, DamageType.FIRE))
                         })
         );
         p.addSpell(new Spell(
@@ -61,7 +61,7 @@ public class Main {
                         "ff",
                         10,
                         new TargetableEffect[]{
-                                new InstantDamageEffect("Flame friendly aoe","Burns your foes", EffectTargetType.FRIENDLY_AOE, new Damage(100,DamageType.FIRE))
+                                new InstantDamageEffect("Flame friendly aoe", "Burns your foes", EffectTargetType.FRIENDLY_AOE, new Damage(100, DamageType.FIRE))
                         })
         );
         p.addSpell(new Spell(
@@ -69,10 +69,10 @@ public class Main {
                         "fa",
                         10,
                         new TargetableEffect[]{
-                                new InstantDamageEffect("Flame friendly aoe","Burns your foes", EffectTargetType.FRIENDLY_AOE, new Damage(100,DamageType.FIRE)),
-                                new InstantDamageEffect("Flame enemy aoe","Burns your foes", EffectTargetType.ENEMY_AOE, new Damage(100,DamageType.FIRE)),
-                                new InstantDamageEffect("Flame single enemy ","Burns your foes", EffectTargetType.ENEMY, new Damage(33,DamageType.FIRE)),
-                                new InstantDamageEffect("Flame single friend ","Burns your foes", EffectTargetType.FRIENDLY, new Damage(11,DamageType.FIRE))
+                                new InstantDamageEffect("Flame friendly aoe", "Burns your foes", EffectTargetType.FRIENDLY_AOE, new Damage(100, DamageType.FIRE)),
+                                new InstantDamageEffect("Flame enemy aoe", "Burns your foes", EffectTargetType.ENEMY_AOE, new Damage(100, DamageType.FIRE)),
+                                new InstantDamageEffect("Flame single enemy ", "Burns your foes", EffectTargetType.ENEMY, new Damage(33, DamageType.FIRE)),
+                                new InstantDamageEffect("Flame single friend ", "Burns your foes", EffectTargetType.FRIENDLY, new Damage(11, DamageType.FIRE))
                         })
         );
 //        p.addSpell(new Spell("AOE Lightning", "l", 3, SpellTargetType.ENEMY_AOE, new InstantDamageEffect("Electro damage effect", "Deal 100 electro damage to each enemy", 100, DamageType.ELECTRIC)));

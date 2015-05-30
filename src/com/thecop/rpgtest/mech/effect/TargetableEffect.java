@@ -13,7 +13,7 @@ public abstract class TargetableEffect<T> extends Effect<T> {
 
     public TargetableEffect(TargetableEffect other) {
         super(other);
-        this.targetType=other.targetType;
+        this.targetType = other.targetType;
     }
 
     public EffectTargetType getTargetType() {

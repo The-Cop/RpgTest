@@ -1,9 +1,9 @@
 package com.thecop.rpgtest.mech.effect.lasting.impl;
 
 import com.thecop.rpgtest.mech.damage.Damage;
-import com.thecop.rpgtest.mech.effect.types.AttackModifier;
 import com.thecop.rpgtest.mech.effect.EffectTargetType;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
+import com.thecop.rpgtest.mech.effect.types.AttackModifier;
 
 /**
  * Created by Admin on 01.04.2015.
@@ -15,7 +15,6 @@ public class AttackAmplifier extends LastingEffect<AttackAmplifier> implements A
         super(name, description, targetType, length);
         this.multiplier = multiplier;
     }
-
 
 
     private AttackAmplifier(AttackAmplifier other) {

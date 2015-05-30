@@ -87,7 +87,7 @@ public class FightScreenController {
                                 break;
                             case BOTH:
                                 friendlyTarget = chooseTarget(fight.getPlayerParty());
-                                if(friendlyTarget==null) break;
+                                if (friendlyTarget == null) break;
                                 enemyTarget = chooseTarget(fight.getMonsterParty());
                                 if (enemyTarget != null && friendlyTarget != null) {
                                     return new PlayerAction(PlayerActionType.SPELL, friendlyTarget, enemyTarget, spell);

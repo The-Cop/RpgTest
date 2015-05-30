@@ -13,16 +13,16 @@ public class Item {
     private String name;
     private String description;
 
-    public Item(String name,String description, List<Effect> effects) {
+    public Item(String name, String description, List<Effect> effects) {
         this.name = name;
         this.effects.addAll(effects);
-        this.description=description;
+        this.description = description;
     }
 
-    public Item(String name,String description, Effect effect) {
+    public Item(String name, String description, Effect effect) {
         this.name = name;
         this.effects.add(effect);
-        this.description=description;
+        this.description = description;
     }
 
 

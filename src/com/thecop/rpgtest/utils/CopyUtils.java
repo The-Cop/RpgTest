@@ -10,7 +10,7 @@ import java.util.List;
  * Created by TheCop on 11.05.2015.
  */
 public class CopyUtils {
-//    public static List<Effect> getCopy(List<Effect> list) {
+    //    public static List<Effect> getCopy(List<Effect> list) {
 //        if (list == null) {
 //            return Collections.emptyList();
 //        }

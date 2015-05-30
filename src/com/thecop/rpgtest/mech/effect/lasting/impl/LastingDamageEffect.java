@@ -2,8 +2,8 @@ package com.thecop.rpgtest.mech.effect.lasting.impl;
 
 import com.thecop.rpgtest.mech.damage.Damage;
 import com.thecop.rpgtest.mech.effect.EffectTargetType;
-import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
+import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.object.GameChar;
 
 /**

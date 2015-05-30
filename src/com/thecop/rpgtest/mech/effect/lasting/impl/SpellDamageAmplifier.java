@@ -1,8 +1,8 @@
 package com.thecop.rpgtest.mech.effect.lasting.impl;
 
 import com.thecop.rpgtest.mech.effect.EffectTargetType;
-import com.thecop.rpgtest.mech.effect.types.SpellModifier;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
+import com.thecop.rpgtest.mech.effect.types.SpellModifier;
 import com.thecop.rpgtest.mech.spell.Spell;
 
 /**

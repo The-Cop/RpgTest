@@ -2,8 +2,8 @@ package com.thecop.rpgtest.mech.fight;
 
 import com.thecop.rpgtest.display.Display;
 import com.thecop.rpgtest.display.FightScreenController;
-import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
+import com.thecop.rpgtest.mech.effect.types.GameCharEffect;
 import com.thecop.rpgtest.mech.player.PlayerAction;
 import com.thecop.rpgtest.object.impl.Monster;
 import com.thecop.rpgtest.object.impl.MonsterParty;
@@ -65,7 +65,7 @@ public class Fight {
                     action = fsc.choosePlayerAction(playerChar);
                 }
                 dlog("Action = " + action);
-                playerChar.performAction(action,this);
+                playerChar.performAction(action, this);
             }
             isPlayersTurn = false;
         } else {

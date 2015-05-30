@@ -157,19 +157,19 @@ public abstract class GameChar implements SpellTarget {
         for (TargetableEffect effect : spell.getEffects()) {
             switch (effect.getTargetType()) {
                 case SELF:
-                    applySingleTargetEffect(effect,this);
+                    applySingleTargetEffect(effect, this);
                     break;
                 case FRIENDLY:
-                    applySingleTargetEffect(effect,friendlyTarget);
+                    applySingleTargetEffect(effect, friendlyTarget);
                     break;
                 case ENEMY:
-                    applySingleTargetEffect(effect,enemyTarget);
+                    applySingleTargetEffect(effect, enemyTarget);
                     break;
                 case FRIENDLY_AOE:
-                    applyAOEEffect(effect,friendlyParty);
+                    applyAOEEffect(effect, friendlyParty);
                     break;
                 case ENEMY_AOE:
-                    applyAOEEffect(effect,enemyParty);
+                    applyAOEEffect(effect, enemyParty);
                     break;
             }
         }

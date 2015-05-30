@@ -48,29 +48,26 @@ public class Spell implements Copyable<Spell> {
         this.effects = CopyUtils.getCopy(other.effects);
     }
 
-    public SpellSingleTargetRequirements getSpellSingleTargetRequirements(){
+    public SpellSingleTargetRequirements getSpellSingleTargetRequirements() {
         SpellSingleTargetRequirements req = SpellSingleTargetRequirements.NONE;
         for (TargetableEffect effect : effects) {
-            if(effect.getTargetType()== EffectTargetType.ENEMY){
-                if(req==SpellSingleTargetRequirements.NONE){
-                    req=SpellSingleTargetRequirements.ENEMY;
-                }
-                else{
-                    req=SpellSingleTargetRequirements.BOTH;
+            if (effect.getTargetType() == EffectTargetType.ENEMY) {
+                if (req == SpellSingleTargetRequirements.NONE) {
+                    req = SpellSingleTargetRequirements.ENEMY;
+                } else {
+                    req = SpellSingleTargetRequirements.BOTH;
                     break;
                 }
-            }
-            else if(effect.getTargetType()==EffectTargetType.FRIENDLY){
-                if(req==SpellSingleTargetRequirements.NONE){
-                    req=SpellSingleTargetRequirements.FRIENDLY;
-                }
-                else{
-                    req=SpellSingleTargetRequirements.BOTH;
+            } else if (effect.getTargetType() == EffectTargetType.FRIENDLY) {
+                if (req == SpellSingleTargetRequirements.NONE) {
+                    req = SpellSingleTargetRequirements.FRIENDLY;
+                } else {
+                    req = SpellSingleTargetRequirements.BOTH;
                     break;
                 }
             }
         }
-        dlog("SpellSingleTargetRequirements = "+req);
+        dlog("SpellSingleTargetRequirements = " + req);
         return req;
     }
 

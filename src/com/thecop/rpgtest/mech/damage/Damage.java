@@ -5,7 +5,7 @@ import com.thecop.rpgtest.mech.Copyable;
 /**
  * Created by Admin on 20.03.2015.
  */
-public class Damage implements Copyable<Damage>{
+public class Damage implements Copyable<Damage> {
 
     private int amount;
     DamageType damageType = DamageType.PHYSICAL;

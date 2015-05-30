@@ -28,7 +28,7 @@ public class PlayerChar extends GameChar {
                 attack(action.getEnemyTarget());
                 return;
             case SPELL:
-                castSpell(action.getSpell(),fight,action.getEnemyTarget(),action.getFriendlyTarget());
+                castSpell(action.getSpell(), fight, action.getEnemyTarget(), action.getFriendlyTarget());
                 return;
             case RUN:
                 //TODO implement runaway
