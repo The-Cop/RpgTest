@@ -1,9 +1,10 @@
 package com.thecop.rpgtest.display;
 
+import com.thecop.rpgtest.display.option.Option;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
-import com.thecop.rpgtest.mech.spell.Spell;
 import com.thecop.rpgtest.object.GameChar;
 import com.thecop.rpgtest.object.Party;
+import com.thecop.rpgtest.utils.Util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,6 +16,8 @@ import static com.thecop.rpgtest.Logger.print;
  * Created by TheCop on 26.03.2015.
  */
 public class Display {
+
+    public static final String BACK_KEY="Q";
 
     public static void party(Party p) {
         PartyFormat format = defineFormat(p);
@@ -151,18 +154,39 @@ public class Display {
         return new PartyFormat(formatSb.toString(), borderSb.toString());
     }
 
-
-    public static void spellCast(Spell spell, GameChar caster, GameChar target) {
-        print(caster.getName() + " casts " + spell.getName() + " on " + target.getName());
+    public static <T> T chooseOption(List<Option<T>> options, String leadingText){
+        while (true) {
+            if(leadingText!=null){
+                print(leadingText);
+            }
+            printOptions(options);
+            printBackOption();
+            final String input = Util.input();
+            if (BACK_KEY.equalsIgnoreCase(input)) {
+                return null;
+            }
+            Option chosen = options.stream()
+                    .filter(o->o.getKey().equalsIgnoreCase(input))
+                    .findFirst()
+                    .orElse(null);
+            if(chosen!=null){
+                return (T)chosen.getObject();
+            }
+        }
     }
 
-    public static void lastingEffect(LastingEffect e) {
-        print("\t(" + e.getLength() + ") " + e.getName() + " - " + e.getDescription());
+    private static <T> void printOptions(List<Option<T>> options){
+        for (Option option : options) {
+            if(option.getKey().equalsIgnoreCase(BACK_KEY)){
+                throw new IllegalArgumentException("Option key can not be \""+Display.BACK_KEY+"\"");
+            }
+            option.print();
+        }
 
     }
+    private static void printBackOption(){
+       print(BACK_KEY + " - Back");
 
-    public static void separator() {
-        print("----------");
     }
 
     public static void separatorBig() {

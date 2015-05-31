@@ -19,6 +19,13 @@ import static com.thecop.rpgtest.Logger.print;
 public class Main {
 
     public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("I am some spell, and this are my effects:");
+        sb.append("\n\t").append("effect 1");
+        sb.append("\n\t").append("effect 2");
+        sb.append("\n\t").append("effect 3");
+
+        print("spellkey - " + sb.toString());
 
         playerFightTest();
 //        String[] columnNames = {

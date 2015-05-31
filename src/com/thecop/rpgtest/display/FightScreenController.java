@@ -59,45 +59,36 @@ public class FightScreenController {
 
     private PlayerAction chooseSpell(PlayerChar player) {
         List<Spell> spells = player.getSpells();
-        while (true) {
-            print("Mana: " + player.getManaString());
-            printSpellList(player);
-            print("Q - back");
-            String input = Util.input();
-            if (FightCommand.getCommand(input) == FightCommand.BACK) {
-                return null;
-            }
-            for (Spell spell : spells) {
-                if (player.canCastSpell(spell)) {
-                    if (spell.getControlString().equalsIgnoreCase(input)) {
-                        switch (spell.getSpellSingleTargetRequirements()) {
-                            case NONE:
-                                return new PlayerAction(PlayerActionType.SPELL, null, null, spell);
-                            case ENEMY:
-                                GameChar enemyTarget = chooseTarget(fight.getMonsterParty());
-                                if (enemyTarget != null) {
-                                    return new PlayerAction(PlayerActionType.SPELL, null, enemyTarget, spell);
-                                }
-                                break;
-                            case FRIENDLY:
-                                GameChar friendlyTarget = chooseTarget(fight.getPlayerParty());
-                                if (friendlyTarget != null) {
-                                    return new PlayerAction(PlayerActionType.SPELL, friendlyTarget, null, spell);
-                                }
-                                break;
-                            case BOTH:
-                                friendlyTarget = chooseTarget(fight.getPlayerParty());
-                                if (friendlyTarget == null) break;
-                                enemyTarget = chooseTarget(fight.getMonsterParty());
-                                if (enemyTarget != null && friendlyTarget != null) {
-                                    return new PlayerAction(PlayerActionType.SPELL, friendlyTarget, enemyTarget, spell);
-                                }
-                                break;
-                        }
-                    }
-                }
-            }
+        Spell spell = Display.chooseOption(Spell.getOptions(spells), "Choose a spell, mana: " + player.getManaString());
+        if(spell==null) {
+            return null;
         }
+        switch (spell.getSpellSingleTargetRequirements()) {
+            case NONE:
+                return new PlayerAction(PlayerActionType.SPELL, null, null, spell);
+            case ENEMY:
+                GameChar enemyTarget = chooseTarget(fight.getMonsterParty());
+                if (enemyTarget != null) {
+                    return new PlayerAction(PlayerActionType.SPELL, null, enemyTarget, spell);
+                }
+                break;
+            case FRIENDLY:
+                GameChar friendlyTarget = chooseTarget(fight.getPlayerParty());
+                if (friendlyTarget != null) {
+                    return new PlayerAction(PlayerActionType.SPELL, friendlyTarget, null, spell);
+                }
+                break;
+            case BOTH:
+                friendlyTarget = chooseTarget(fight.getPlayerParty());
+                if (friendlyTarget == null) break;
+                enemyTarget = chooseTarget(fight.getMonsterParty());
+                if (enemyTarget != null && friendlyTarget != null) {
+                    return new PlayerAction(PlayerActionType.SPELL, friendlyTarget, enemyTarget, spell);
+                }
+                break;
+        }
+
+        return null;
     }
 
     private GameChar chooseTarget(Party party) {

@@ -1,5 +1,6 @@
 package com.thecop.rpgtest.mech.spell;
 
+import com.thecop.rpgtest.display.option.Option;
 import com.thecop.rpgtest.mech.Copyable;
 import com.thecop.rpgtest.mech.effect.EffectTargetType;
 import com.thecop.rpgtest.mech.effect.TargetableEffect;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.thecop.rpgtest.Logger.dlog;
 
@@ -91,6 +93,12 @@ public class Spell implements Copyable<Spell> {
         return effects;
     }
 
+    public String getDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(effects.size() == 0 ? ", no effects" : ", effects:");
+        effects.forEach(e -> sb.append("\n\t").append(e.getDescription()));
+        return sb.toString();
+    }
 
     @Override
     public String toString() {
@@ -105,5 +113,15 @@ public class Spell implements Copyable<Spell> {
     @Override
     public Spell getCopy() {
         return new Spell(this);
+    }
+
+    public Option<Spell> getOption() {
+        return new Option<>(this.getControlString(), this.getDescription(), this);
+    }
+
+    public static List<Option<Spell>> getOptions(List<Spell> spells) {
+        return spells.stream()
+                .map(s -> s.getOption())
+                .collect(Collectors.toList());
     }
 }
