@@ -239,7 +239,7 @@ public abstract class GameChar implements SpellTarget {
     }
 
     public void takeEffectDamage(Damage damage, String effectName) {
-        print(getName() + " is affected by " + effectName + " effect.");
+        print(getName() + " is damaged by " + effectName + " effect.");
         calculateAndDealDamage(damage);
     }
 
