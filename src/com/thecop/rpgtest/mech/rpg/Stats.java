@@ -1,6 +1,8 @@
 package com.thecop.rpgtest.mech.rpg;
 
 import com.thecop.rpgtest.mech.Copyable;
+import com.thecop.rpgtest.mech.damage.DamageType;
+import com.thecop.rpgtest.mech.damage.Resistance;
 
 /**
  * Created by Admin on 03.06.2015.
@@ -16,6 +18,12 @@ public class Stats implements Copyable<Stats> {
     private int baseMana;
     private int baseSpeed;
     private int baseEvasion;
+
+    private Resistance basePhysicalResistance;
+    private Resistance baseFireResistance;
+    private Resistance baseIceResistance;
+    private Resistance baseElectricResistance;
+
     //health
     //mana
     //speed
@@ -50,7 +58,11 @@ public class Stats implements Copyable<Stats> {
     //- evasion
     private int endurance;
 
-    public Stats(int baseHealth, int baseMana, int baseSpeed, int baseEvasion, int strength, int agility, int intelligence, int endurance) {
+    public Stats(int baseHealth, int baseMana, int baseSpeed, int baseEvasion, int strength, int agility, int intelligence, int endurance,
+                 int basePhysicalResistanceStrength,
+                 int baseFireResistanceStrength,
+                 int baseIceResistanceStrength,
+                 int baseElectricResistanceStrength) {
         this.baseHealth = baseHealth;
         this.baseMana = baseMana;
         this.baseSpeed = baseSpeed;
@@ -59,18 +71,30 @@ public class Stats implements Copyable<Stats> {
         this.agility = agility;
         this.intelligence = intelligence;
         this.endurance = endurance;
+        this.basePhysicalResistance = new Resistance(DamageType.PHYSICAL,basePhysicalResistanceStrength);
+        this.baseFireResistance = new Resistance(DamageType.FIRE,baseFireResistanceStrength);
+        this.baseIceResistance = new Resistance(DamageType.ICE,baseIceResistanceStrength);
+        this.baseElectricResistance = new Resistance(DamageType.ELECTRIC,baseElectricResistanceStrength);
     }
+
 
     public Stats(Stats other) {
         this.baseHealth = other.baseHealth;
         this.baseMana = other.baseMana;
         this.baseSpeed = other.baseSpeed;
         this.baseEvasion = other.baseEvasion;
+
+        this.basePhysicalResistance = new Resistance(other.basePhysicalResistance);
+        this.baseFireResistance = new Resistance(other.baseFireResistance);
+        this.baseIceResistance = new Resistance(other.baseIceResistance);
+        this.baseElectricResistance = new Resistance(other.baseElectricResistance);
+
         this.strength = other.strength;
         this.agility = other.agility;
         this.intelligence = other.intelligence;
         this.endurance = other.endurance;
     }
+
 
     public int getHealth() {
         int calculatedHealth = baseHealth;
@@ -92,7 +116,7 @@ public class Stats implements Copyable<Stats> {
         calculatedMana = calculatedMana + (int) (intelligence * 3);
         calculatedMana = calculatedMana - (int) (strength * 1d);
         calculatedMana = calculatedMana - (int) (agility * 1d);
-        return calculatedMana > MIN_SPEED ? calculatedMana : MIN_SPEED;
+        return calculatedMana > MIN_MANA ? calculatedMana : MIN_MANA;
     }
 
     public int getSpeed() {
@@ -109,6 +133,12 @@ public class Stats implements Copyable<Stats> {
         calculatedEvasion = calculatedEvasion - (int) (endurance * 0.1d);
         return calculatedEvasion > MIN_EVASION ? calculatedEvasion : MIN_EVASION;
     }
+
+    private int getAdditionalPhysicalResistanceStrength(){
+        return 0;
+    }
+
+
 
 
     public int getStrength() {

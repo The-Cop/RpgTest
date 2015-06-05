@@ -11,6 +11,7 @@ import com.thecop.rpgtest.mech.effect.instant.InstantEffect;
 import com.thecop.rpgtest.mech.effect.lasting.LastingEffect;
 import com.thecop.rpgtest.mech.effect.types.AttackModifier;
 import com.thecop.rpgtest.mech.effect.types.IncomingDamageEffect;
+import com.thecop.rpgtest.mech.effect.types.ResistanceModifier;
 import com.thecop.rpgtest.mech.effect.types.SpellModifier;
 import com.thecop.rpgtest.mech.fight.Fight;
 import com.thecop.rpgtest.mech.spell.Spell;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.thecop.rpgtest.Logger.dlog;
 import static com.thecop.rpgtest.Logger.print;
@@ -30,7 +32,7 @@ import static com.thecop.rpgtest.Logger.print;
  * Created by TheCop on 24.03.2015.
  */
 public abstract class GameChar implements SpellTarget {
-    public static final double RESISTANCE_FORMULA_MULTIPLIER = 0.04d;
+    public static final double RESISTANCE_FORMULA_MULTIPLIER = 0.01d;
 
     protected String name;
 
@@ -92,7 +94,15 @@ public abstract class GameChar implements SpellTarget {
 
 
     public Resistance getResistance(DamageType type) {
-        return resistances.get(type);
+        Resistance res = resistances.get(type);
+        List<ResistanceModifier> modifiers = lastingEffects.stream()
+                .filter(e -> e instanceof ResistanceModifier)
+                .map(e->(ResistanceModifier)e)
+                .collect(Collectors.toList());
+        for (ResistanceModifier modifier : modifiers) {
+            res = modifier.modifyResistance(res);
+        }
+        return res;
     }
 
     public int getHealthLeft() {

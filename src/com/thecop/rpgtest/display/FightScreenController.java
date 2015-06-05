@@ -41,7 +41,7 @@ public class FightScreenController {
                     if (target == null) {
                         break;
                     }
-                    return new PlayerAction(PlayerActionType.USUAL_ATTACK, target, null, null);
+                    return new PlayerAction(PlayerActionType.USUAL_ATTACK, null, target, null);
                 case SPELL:
                     PlayerAction spellAction = chooseSpell(player);
                     if (spellAction != null) {

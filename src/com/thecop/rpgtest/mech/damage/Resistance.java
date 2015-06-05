@@ -1,9 +1,11 @@
 package com.thecop.rpgtest.mech.damage;
 
+import com.thecop.rpgtest.mech.Copyable;
+
 /**
  * Created by Admin on 20.03.2015.
  */
-public class Resistance {
+public class Resistance implements Copyable<Resistance>{
     private DamageType type;
     private int strength;
 
@@ -14,6 +16,12 @@ public class Resistance {
         this.type = type;
         this.strength = strength;
     }
+
+    public Resistance(Resistance other) {
+        this.type = other.type;
+        this.strength = other.strength;
+    }
+
 
     public DamageType getType() {
         return type;
@@ -29,5 +37,10 @@ public class Resistance {
                 "type=" + type +
                 ", strength=" + strength +
                 '}';
+    }
+
+    @Override
+    public Resistance getCopy() {
+        return new Resistance(this);
     }
 }

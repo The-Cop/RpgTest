@@ -7,6 +7,7 @@ import com.thecop.rpgtest.mech.damage.Resistance;
 import com.thecop.rpgtest.mech.effect.EffectTargetType;
 import com.thecop.rpgtest.mech.effect.TargetableEffect;
 import com.thecop.rpgtest.mech.effect.instant.impl.InstantDamageEffect;
+import com.thecop.rpgtest.mech.effect.lasting.impl.LowerResistance;
 import com.thecop.rpgtest.mech.fight.Fight;
 import com.thecop.rpgtest.mech.spell.Spell;
 import com.thecop.rpgtest.object.impl.Monster;
@@ -55,6 +56,14 @@ public class Main {
 
     private static PlayerChar getPlayer(int number) {
         PlayerChar p = new PlayerChar("HERO" + number, 1000, 250, AttackRange.MELEE, 15);
+        p.addSpell(new Spell(
+                        "Lower physical resistances",
+                        "lpr",
+                        10,
+                        new TargetableEffect[]{
+                                new LowerResistance("Lowers Physical resistance","Lowers Physical resistance",EffectTargetType.ENEMY,5,20,DamageType.PHYSICAL)
+                        })
+        );
         p.addSpell(new Spell(
                         "Enemy AOE Flamestrike",
                         "fe",
